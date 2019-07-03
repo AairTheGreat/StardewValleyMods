@@ -1,6 +1,6 @@
 [Better Panning](https://github.com/ShiftingSands/BetterPanning) is a [Stardew Valley](http://stardewvalley.net/) mod which improves the panning gameplay.
                                                                                                            
-**This documentation is for modders and player. See the [Nexus page - NOT SETUP YET](https://www.nexusmods.com/stardewvalley/mods/XXXX) if you want the compiled mod.**
+**This documentation is for modders and player. See the [Nexus page](https://www.nexusmods.com/stardewvalley/mods/4161) if you want the compiled mod.**
                                                                                                            
 ## Contents
 * [Install](#install)
@@ -38,7 +38,7 @@
 
 ## Install
 1. [Install the latest version of SMAPI](https://smapi.io/).
-2. Install [this mod from Nexus mods  - NOT SETUP YET](https://www.nexusmods.com/stardewvalley/mods/XXXX).
+2. Install [this mod from Nexus mods](https://www.nexusmods.com/stardewvalley/mods/4161).
 3. Run the game using SMAPI.
 
 ## Introduction
@@ -56,7 +56,7 @@ Better Panning allows you to:
 	* Seed packets.  You can find seeds for the next season or if you're in winter you can find seeds from all the other seasons too.
 	* Rings and boots
 	* Rare items like pearls, prismatic shards, treasure chests
-	* Unfound Artifacts. Once you find all the artifacts, the 
+	* Unfound Artifacts. Once you find all the artifacts, all the artifacts can be panned. 
 	* Fishing Tackle
 	* Totems
 	* Coal, Rice, and the occasional trash
