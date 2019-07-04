@@ -50,7 +50,7 @@ If you want the pan to be useful, then this is the mod for you.
 Better Panning allows you to: 
 * Fine tuned game areas so the chance of getting a panning spot out of reach is greatly reduced.  In fact, sometimes the panning spots are on the ground next to the water.
 * The Beach now can have panning spots
-* Custom treasure list.  With Better Panning you don't just get ore.  You can get any item.  With that said, the follow types of items are by default configured to be panned:
+* Custom treasure list.  With Better Panning you don't just get ore.  You can get any item.  With that said, the following types of items are by default configured to be panned:
 	* Ore and Ore Bars
 	* Gems, Minerals, Geodes, and previously found geode minerals
 	* Seed packets.  You can find seeds for the next season or if you're in winter you can find seeds from all the other seasons too.
