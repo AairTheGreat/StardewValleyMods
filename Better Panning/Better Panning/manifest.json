@@ -6,5 +6,8 @@
   "UniqueID": "AairTheGreat.BetterPanning",
   "EntryDll": "Better Panning.dll",
   "MinimumApiVersion": "2.11",
-  "UpdateKeys": [ "GitHub:AairTheGreat/StardewValleyMods", "Nexus:4161" ]
+  "UpdateKeys": [
+    "GitHub:AairTheGreat/StardewValleyMods",
+    "Nexus:4161"
+  ]
 }
