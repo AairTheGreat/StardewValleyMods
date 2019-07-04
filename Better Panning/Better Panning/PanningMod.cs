@@ -155,9 +155,12 @@ namespace BetterPanning
             if (!orePoint.Equals(Point.Zero))
             {                
                 string oreRelativePostion = GetOreRelativePostion(orePoint);
-                long distance = GetDistanceToOre(orePoint);                
-                hudTextLine2 = $"In the {oreRelativePostion} direction.";
-                hudTextLine3 = $"Roughly { distance} tiles away.";                
+                long distance = GetDistanceToOre(orePoint);
+                if (config.showDistance)
+                {
+                    hudTextLine2 = $"In the {oreRelativePostion} direction.";
+                    hudTextLine3 = $"Roughly { distance} tiles away.";
+                }
             }
             else
             {
