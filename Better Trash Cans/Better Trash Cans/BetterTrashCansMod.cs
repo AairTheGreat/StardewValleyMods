@@ -2,27 +2,15 @@
 using BetterTrashCans.Data;
 using BetterTrashCans.GamePatch;
 using Harmony;
-using Microsoft.Xna.Framework;
-using Netcode;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
-using StardewValley.Characters;
 using StardewValley.Locations;
-using StardewValley.Menus;
-using StardewValley.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using xTile.Dimensions;
 
-
-//  TrashCanMachine 
-//private int? GetRandomTrash(int index)
 namespace BetterTrashCans
 {
     public class BetterTrashCansMod : Mod
