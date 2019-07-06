@@ -13,6 +13,7 @@ using StardewValley.Menus;
 using StardewValley.Tools;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -32,7 +33,7 @@ namespace BetterTrashCans
         internal HarmonyInstance harmony { get; private set; }
 
         internal ModConfig config;
-        internal Dictionary<TRASHCANS, Trashcan> treasureGroups;
+        internal Dictionary<TRASHCANS, Trashcan> trashcans;
 
         public override void Entry(IModHelper helper)
         {
@@ -43,6 +44,10 @@ namespace BetterTrashCans
             {
                 harmony = HarmonyInstance.Create("com.aairthegreat.mod.trashcan");
                 harmony.Patch(typeof(Town).GetMethod("checkAction"), new HarmonyMethod(typeof(TrashCanOverrider).GetMethod("prefix_betterTrashCans")));
+
+                string trashcanFile = Path.Combine("DataFiles", "Trashcans.json");
+                trashcans = this.Helper.Data.ReadJsonFile<Dictionary<TRASHCANS, Trashcan>>(trashcanFile) ?? TrashcanDefaultConfig.CreateTrashcans(trashcanFile);
+
 
                 helper.Events.GameLoop.SaveLoaded += GameLoop_SaveLoaded;
                 helper.Events.GameLoop.DayStarted += GameLoop_DayStarted;
@@ -55,7 +60,11 @@ namespace BetterTrashCans
         private void GameLoop_DayStarted(object sender, DayStartedEventArgs e)
         {
             // Update trash can settings.
-
+            foreach (int i in Enum.GetValues(typeof(TRASHCANS)))
+            {
+                trashcans[(TRASHCANS)i].LastTimeChecked = -1;
+                trashcans[(TRASHCANS)i].LastTimeFoundItem = -1;
+            }
         }
 
         private void GameLoop_SaveLoaded(object sender, SaveLoadedEventArgs e)

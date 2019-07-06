@@ -67,7 +67,7 @@
     <Compile Include="BetterTrashCansMod.cs" />
     <Compile Include="Config\ModConfig.cs" />
     <Compile Include="Config\ModConfigDefaultConfig.cs" />
-    <Compile Include="Config\TreasureGroupDefaultConfig.cs" />
+    <Compile Include="Config\TrashcanDefaultConfig.cs" />
     <Compile Include="Data\TrashTreasure.cs" />
     <Compile Include="Data\Trashcan.cs" />
     <Compile Include="Framework\IWeighted.cs" />

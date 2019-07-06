@@ -4,25 +4,25 @@ using System.Collections.Generic;
 
 namespace BetterTrashCans.Config
 {
-    public static class TreasureGroupDefaultConfig
+    public static class TrashcanDefaultConfig
     {
-        public static Dictionary<TRASHCANS, Trashcan> CreateTreasureGroup(string file)
+        public static Dictionary<TRASHCANS, Trashcan> CreateTrashcans(string file)
         {
             Dictionary<TRASHCANS, Trashcan> groups = new Dictionary<TRASHCANS, Trashcan>();
-            groups.Add(TRASHCANS.JODI_SAM, CreateGroup(TRASHCANS.JODI_SAM));
-            groups.Add(TRASHCANS.EMILY_HALEY, CreateGroup(TRASHCANS.EMILY_HALEY));
-            groups.Add(TRASHCANS.MAYOR_LEWIS, CreateGroup(TRASHCANS.MAYOR_LEWIS));
-            groups.Add(TRASHCANS.GUNTHER, CreateGroup(TRASHCANS.GUNTHER));
-            groups.Add(TRASHCANS.CLINT, CreateGroup(TRASHCANS.CLINT));
-            groups.Add(TRASHCANS.STARDROP_SALOON, CreateGroup(TRASHCANS.STARDROP_SALOON));
-            groups.Add(TRASHCANS.EVELYN_GEORGE, CreateGroup(TRASHCANS.EVELYN_GEORGE));
+            groups.Add(TRASHCANS.JODI_SAM, CreateTrashcan(TRASHCANS.JODI_SAM));
+            groups.Add(TRASHCANS.EMILY_HALEY, CreateTrashcan(TRASHCANS.EMILY_HALEY));
+            groups.Add(TRASHCANS.MAYOR_LEWIS, CreateTrashcan(TRASHCANS.MAYOR_LEWIS));
+            groups.Add(TRASHCANS.GUNTHER, CreateTrashcan(TRASHCANS.GUNTHER));
+            groups.Add(TRASHCANS.CLINT, CreateTrashcan(TRASHCANS.CLINT));
+            groups.Add(TRASHCANS.STARDROP_SALOON, CreateTrashcan(TRASHCANS.STARDROP_SALOON));
+            groups.Add(TRASHCANS.EVELYN_GEORGE, CreateTrashcan(TRASHCANS.EVELYN_GEORGE));
 
             BetterTrashCansMod.Instance.Helper.Data.WriteJsonFile(file, groups);
 
             return groups;
         }
 
-        private static Trashcan CreateGroup(TRASHCANS id)
+        private static Trashcan CreateTrashcan(TRASHCANS id)
         {
            Trashcan newGroup = new Trashcan(id);
             newGroup.treasureList = GetTreasureList(id);

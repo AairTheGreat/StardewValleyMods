@@ -18,7 +18,7 @@ namespace BetterTrashCans.GamePatch
    static class TrashCanOverrider
    {
         public static void prefix_betterTrashCans(Town __instance, Location tileLocation, ref Farmer who,
-            ref NetArray<bool, NetBool> ___garbageChecked) //ref NetArray<bool, NetBool> ___garbageChecked)
+            ref IList<bool> ___garbageChecked) //ref NetArray<bool, NetBool> ___garbageChecked)
         {
             if (__instance.map.GetLayer("Buildings").Tiles[tileLocation] != null)
             {
@@ -31,33 +31,91 @@ namespace BetterTrashCans.GamePatch
                     else
                         index = Convert.ToInt32(str.Split(' ')[1]);
                     
-                    if (index >= 0 && index < ___garbageChecked.Length 
-                        && (!___garbageChecked[index] || BetterTrashCansMod.Instance.config.allowTrashCanRecheck))
+                    if (index >= 0 && index < ___garbageChecked.Count)
                     {
-                        BetterTrashCansMod.Instance.Monitor.Log($"prefix ran: index = {index}");
-                        ___garbageChecked[index] = true;
-                        __instance.playSound("trashcan");
-
-                        CheckForNPCMessages(__instance, tileLocation, ref who);
-
-                        Item reward;
-
-                        if (BetterTrashCansMod.Instance.config.useCustomTrashcanTreasure)
+                        if (CanCheckTrashcan((TRASHCANS)index))
                         {
-                            reward = GetCustomTrashTreasure(index);
-                        }
-                        else
-                        {
-                            reward = GetDefaultTrashTreasure(index, tileLocation);
-                        }
+                            //BetterTrashCansMod.Instance.Monitor.Log($"prefix ran: index = {index}");
+                            BetterTrashCansMod.Instance.trashcans[(TRASHCANS)index].LastTimeChecked = Game1.timeOfDay;
+                            BetterTrashCansMod.Instance.Monitor.Log($"Checked {(TRASHCANS)index} - Game time of day: {Game1.timeOfDay}");
+                            ___garbageChecked[index] = true;
 
-                        if (reward != null)
-                        {
-                            who.addItemByMenuIfNecessary(reward, (ItemGrabMenu.behaviorOnItemSelect)null);
+                            __instance.playSound("trashcan");
+
+                            CheckForNPCMessages(__instance, tileLocation, ref who);
+
+                            Item reward;
+
+                            if (BetterTrashCansMod.Instance.config.useCustomTrashcanTreasure)
+                            {
+                                reward = GetCustomTrashTreasure(index);                                
+                            }
+                            else
+                            {
+                                reward = GetDefaultTrashTreasure(index, tileLocation);
+                            }
+
+                            if (reward != null)
+                            {
+                                who.addItemByMenuIfNecessary(reward, (ItemGrabMenu.behaviorOnItemSelect)null);
+                                BetterTrashCansMod.Instance.trashcans[(TRASHCANS)index].LastTimeFoundItem = Game1.timeOfDay;
+                                BetterTrashCansMod.Instance.Monitor.Log($"Got treasure from {(TRASHCANS)index} - Game time of day: {Game1.timeOfDay}");
+                            }
                         }
                     }
                 }
             }
+        }
+
+        private static bool CanCheckTrashcan(TRASHCANS can)
+        {
+            bool canCheckForItems = false;
+
+            //Has the trashcan been checked today?
+            if (BetterTrashCansMod.Instance.trashcans[can].LastTimeChecked == -1) //LastTimeChecked defaults per day to -1
+            {
+                // You have never checked that can...
+                canCheckForItems = true;
+            }
+            else if (BetterTrashCansMod.Instance.config.allowTrashCanRecheck) //You have check the trashcan before.... and you can recheck it
+            {
+                //See if enough time has pasted since last check
+                if (CanCheckBasedOnLastCheckTime(can))
+                {                    
+                    if (BetterTrashCansMod.Instance.trashcans[can].LastTimeFoundItem == -1)
+                    {
+                        //Enough time has passed, and never found anything...
+                        canCheckForItems = true;
+                    } 
+                    else if (BetterTrashCansMod.Instance.config.allowMultipleItemsPerDay) // So you have found at least something before
+                    {
+                        //See if enough time has pasted since last found item
+                        canCheckForItems = CanCheckBasedOnLastFoundTime(can);
+                    }
+                }
+            }
+
+            return canCheckForItems;
+        }
+
+        private static bool CanCheckBasedOnLastCheckTime(TRASHCANS can)
+        {
+            return Game1.timeOfDay >= GetWaitTime(BetterTrashCansMod.Instance.trashcans[can].LastTimeChecked,
+                        BetterTrashCansMod.Instance.config.WaitTimeIfFoundNothing);
+        }
+
+        private static bool CanCheckBasedOnLastFoundTime(TRASHCANS can)
+        {
+            return Game1.timeOfDay >= GetWaitTime(BetterTrashCansMod.Instance.trashcans[can].LastTimeFoundItem,
+                BetterTrashCansMod.Instance.config.WaitTimeIfFoundSomething);
+        }
+
+        private static int GetWaitTime(int time, int addMinutes)
+        {
+            int hours = time / 100;
+            int minutes = (time % 100) + addMinutes;
+
+            return ((hours + minutes / 60) * 100) + (minutes % 60);
         }
 
         private static void CheckForNPCMessages(GameLocation location, Location tileLocation, ref Farmer player)
@@ -103,11 +161,11 @@ namespace BetterTrashCans.GamePatch
         private static Item GetCustomTrashTreasure(int index)
         {
             Random random = new Random((int)Game1.uniqueIDForThisGame / 2 + (int)Game1.stats.DaysPlayed + 777 + index + Game1.timeOfDay);
-            int parentSheetIndex = -1;
-            BetterTrashCansMod.Instance.Monitor.Log($"Game time of day: {Game1.timeOfDay}");
+            int parentSheetIndex = -1;            
             if (random.NextDouble() < BetterTrashCansMod.Instance.config.baseChancePercent + Game1.dailyLuck)
             {
                 parentSheetIndex = 74;
+                BetterTrashCansMod.Instance.trashcans[(TRASHCANS)index].LastTimeFoundItem = Game1.timeOfDay;
             }
 
             if (parentSheetIndex > 0)
@@ -171,7 +229,7 @@ namespace BetterTrashCans.GamePatch
                     random.Next(1, 5);
                 }
                 if (index == 5 && random.NextDouble() < 0.2 + Game1.dailyLuck && Game1.dishOfTheDay != null)
-                    parentSheetIndex = (int)((NetFieldBase<int, NetInt>)Game1.dishOfTheDay.parentSheetIndex) != 217 ? (int)((NetFieldBase<int, NetInt>)Game1.dishOfTheDay.parentSheetIndex) : 216;
+                    parentSheetIndex = Game1.dishOfTheDay.ParentSheetIndex != 217 ? Game1.dishOfTheDay.ParentSheetIndex : 216;
                 if (index == 6 && random.NextDouble() < 0.2 + Game1.dailyLuck)
                     parentSheetIndex = 223;
             }
@@ -195,7 +253,7 @@ namespace BetterTrashCans.GamePatch
             //    .OrderBy(group => group.GroupChance)
             //    .ToList();
 
-            Trashcan trashcan = BetterTrashCansMod.Instance.treasureGroups[index]; //possibleGroups.ChooseItem(Game1.random);
+            Trashcan trashcan = BetterTrashCansMod.Instance.trashcans[index]; //possibleGroups.ChooseItem(Game1.random);
                 
             // Possible treasure based on selected treasure group selected above.
             List<TrashTreasure> possibleLoot = new List<TrashTreasure>(trashcan.treasureList)
