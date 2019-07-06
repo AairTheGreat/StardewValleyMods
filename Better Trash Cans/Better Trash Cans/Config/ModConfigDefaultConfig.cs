@@ -18,7 +18,9 @@ namespace BetterTrashCans.Config
                 baseChancePercent = 0.20, //Base Game 
                 useCustomTrashcanTreasure = true,
                 FriendshipPoints = -25,
-                LinusFriendshipPoints = 5
+                LinusFriendshipPoints = 5,
+                WaitTimeIfFoundNothing = 60,
+                WaitTimeIfFoundSomething = 240
         //showDistance = true,
         //sp_alwaysCreatePanningSpots = true,
         //mp_alwaysCreatePanningSpots = false,

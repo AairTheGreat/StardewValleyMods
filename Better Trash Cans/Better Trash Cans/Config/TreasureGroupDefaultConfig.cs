@@ -6,105 +6,60 @@ namespace BetterTrashCans.Config
 {
     public static class TreasureGroupDefaultConfig
     {
-        public static Dictionary<TREASURE_GROUP, TreasureGroup> CreateTreasureGroup(string file)
+        public static Dictionary<TRASHCANS, Trashcan> CreateTreasureGroup(string file)
         {
-            Dictionary<TREASURE_GROUP, TreasureGroup> groups = new Dictionary<TREASURE_GROUP, TreasureGroup>();
-
-            groups.Add(TREASURE_GROUP.Rares, CreateGroup(TREASURE_GROUP.Rares, 0.005));
-            groups.Add(TREASURE_GROUP.Geodes, CreateGroup(TREASURE_GROUP.Geodes, 0.075));
-            groups.Add(TREASURE_GROUP.GeodeMinerals, CreateGroup(TREASURE_GROUP.GeodeMinerals, 0.02));            
-            groups.Add(TREASURE_GROUP.Boots, CreateGroup(TREASURE_GROUP.Boots,  0.01));
-            groups.Add(TREASURE_GROUP.Rings, CreateGroup(TREASURE_GROUP.Rings, 0.01));
-            groups.Add(TREASURE_GROUP.Minerals, CreateGroup(TREASURE_GROUP.Minerals, 0.15));
-            groups.Add(TREASURE_GROUP.Artifacts, CreateGroup(TREASURE_GROUP.Artifacts, 0.01));
-            groups.Add(TREASURE_GROUP.Gems, CreateGroup(TREASURE_GROUP.Gems, 0.06));
-            groups.Add(TREASURE_GROUP.Ores, CreateGroup(TREASURE_GROUP.Ores, 0.40));
-            groups.Add(TREASURE_GROUP.Bars, CreateGroup(TREASURE_GROUP.Bars, 0.04));
-            groups.Add(TREASURE_GROUP.Tackle, CreateGroup(TREASURE_GROUP.Tackle, 0.02));
-            groups.Add(TREASURE_GROUP.Totems, CreateGroup(TREASURE_GROUP.Totems, 0.01));
-            groups.Add(TREASURE_GROUP.SpringSeeds, CreateGroup(TREASURE_GROUP.SpringSeeds, 0.0125));            
-            groups.Add(TREASURE_GROUP.SummerSeeds, CreateGroup(TREASURE_GROUP.SummerSeeds, 0.0125));            
-            groups.Add(TREASURE_GROUP.FallSeeds, CreateGroup(TREASURE_GROUP.FallSeeds, 0.0125));            
-            groups.Add(TREASURE_GROUP.WinterSeeds, CreateGroup(TREASURE_GROUP.WinterSeeds, 0.0125));            
-            groups.Add(TREASURE_GROUP.Other, CreateGroup(TREASURE_GROUP.Other, 0.14));
-            groups.Add(TREASURE_GROUP.Custom, CreateGroup(TREASURE_GROUP.Custom, 0.00, false));
+            Dictionary<TRASHCANS, Trashcan> groups = new Dictionary<TRASHCANS, Trashcan>();
+            groups.Add(TRASHCANS.JODI_SAM, CreateGroup(TRASHCANS.JODI_SAM));
+            groups.Add(TRASHCANS.EMILY_HALEY, CreateGroup(TRASHCANS.EMILY_HALEY));
+            groups.Add(TRASHCANS.MAYOR_LEWIS, CreateGroup(TRASHCANS.MAYOR_LEWIS));
+            groups.Add(TRASHCANS.GUNTHER, CreateGroup(TRASHCANS.GUNTHER));
+            groups.Add(TRASHCANS.CLINT, CreateGroup(TRASHCANS.CLINT));
+            groups.Add(TRASHCANS.STARDROP_SALOON, CreateGroup(TRASHCANS.STARDROP_SALOON));
+            groups.Add(TRASHCANS.EVELYN_GEORGE, CreateGroup(TRASHCANS.EVELYN_GEORGE));
 
             BetterTrashCansMod.Instance.Helper.Data.WriteJsonFile(file, groups);
 
             return groups;
         }
 
-        private static TreasureGroup CreateGroup(TREASURE_GROUP id, double chance, bool enabled = true, bool manual = false)
+        private static Trashcan CreateGroup(TRASHCANS id)
         {
-           TreasureGroup newGroup = new TreasureGroup(id, chance, enabled, manual);
+           Trashcan newGroup = new Trashcan(id);
             newGroup.treasureList = GetTreasureList(id);
             return newGroup;
         }
 
-        private static List<TrashTreasure> GetTreasureList(TREASURE_GROUP id)
+        private static List<TrashTreasure> GetTreasureList(TRASHCANS id)
         {
             switch (id)
             {
-                case TREASURE_GROUP.Rares:
-                    return GetRareTreasureList();    
+                case TRASHCANS.JODI_SAM:
+                    return GetJodiSamTreasureList();    
                     
-                case TREASURE_GROUP.Geodes:
-                    return GetGeodeTreasureList();      
+                case TRASHCANS.EMILY_HALEY:
+                    return GetEmilyHaleyTreasureList();      
                     
-                case TREASURE_GROUP.GeodeMinerals:
-                    return GetGeodeMineralsTreasureList(); 
+                case TRASHCANS.MAYOR_LEWIS:
+                    return GetMayorLewisTreasureList(); 
                     
-                case TREASURE_GROUP.Boots:
-                    return GetBootsTreasureList();    
+                case TRASHCANS.GUNTHER:
+                    return GetGuntherTreasureList();    
                     
-                case TREASURE_GROUP.Rings:
-                    return GetRingsTreasureList();   
+                case TRASHCANS.CLINT:
+                    return GetClintTreasureList();   
                     
-                case TREASURE_GROUP.Minerals:
-                    return GetMinerialTreasureList();    
+                case TRASHCANS.STARDROP_SALOON:
+                    return GetSaloonTreasureList();    
                     
-                case TREASURE_GROUP.Artifacts:
-                    return GetArtifactTreasureList();     
-                    
-                case TREASURE_GROUP.Gems:
-                    return GetGemsTreasureList();
-
-                case TREASURE_GROUP.Ores:
-                    return GetOreTreasureList();
-
-                case TREASURE_GROUP.Bars:
-                    return GetBarTreasureList();
-
-                case TREASURE_GROUP.Tackle:
-                    return GetTackleTreasureList();
-
-                case TREASURE_GROUP.Totems:
-                    return GetTotemTreasureList();
-
-                case TREASURE_GROUP.SpringSeeds:
-                    return GetSpringSeedTreasureList();
-
-                case TREASURE_GROUP.SummerSeeds:
-                    return GetSummerSeedTreasureList();
-
-                case TREASURE_GROUP.FallSeeds:
-                    return GetFallSeedTreasureList();
-
-                case TREASURE_GROUP.WinterSeeds:
-                    return GetWinterSeedTreasureList();
-
-                case TREASURE_GROUP.Other:
-                    return GetOtherTreasureList();   
-                    
-                case TREASURE_GROUP.Custom:
-                    return GetCustomTreasureList();  
+                case TRASHCANS.EVELYN_GEORGE:
+                    return GetEvelynGeorgeTreasureList();     
                     
                 default:
                     return new List<TrashTreasure>();                    
             }
         }
 
-        private static List<TrashTreasure> GetRareTreasureList()
+        private static List<TrashTreasure> GetJodiSamTreasureList()
         {
             List<TrashTreasure> treasures = new List<TrashTreasure>();
             treasures.Add(CreateTreasure(SObject.prismaticShardIndex, "Prismatic Shard", 0.10));
@@ -116,7 +71,7 @@ namespace BetterTrashCans.Config
             return treasures;
         }
 
-        private static List<TrashTreasure> GetGeodeTreasureList()
+        private static List<TrashTreasure> GetEmilyHaleyTreasureList()
         {
             List<TrashTreasure> treasures = new List<TrashTreasure>();
             treasures.Add(CreateTreasure(535, "Geode", 0.50, 1, 5));
@@ -127,7 +82,7 @@ namespace BetterTrashCans.Config
             return treasures;
         }
 
-        private static List<TrashTreasure> GetGeodeMineralsTreasureList()
+        private static List<TrashTreasure> GetMayorLewisTreasureList()
         {
             List<TrashTreasure> treasures = new List<TrashTreasure>();
             treasures.Add(CreateTreasure(538, "Alamite",  0.016721));
@@ -175,7 +130,7 @@ namespace BetterTrashCans.Config
             return treasures;
         }
 
-        private static List<TrashTreasure> GetBootsTreasureList()
+        private static List<TrashTreasure> GetGuntherTreasureList()
         {
             List<TrashTreasure> treasures = new List<TrashTreasure>();
             treasures.Add(CreateTreasure(504, "Sneakers",  0.20));
@@ -194,7 +149,7 @@ namespace BetterTrashCans.Config
             return treasures;
         }
 
-        private static List<TrashTreasure> GetRingsTreasureList()
+        private static List<TrashTreasure> GetClintTreasureList()
         {
             List<TrashTreasure> treasures = new List<TrashTreasure>();
             treasures.Add(CreateTreasure(516, "Small Glow Ring", 0.35));
@@ -219,7 +174,7 @@ namespace BetterTrashCans.Config
             return treasures;
         }
 
-        private static List<TrashTreasure> GetMinerialTreasureList()
+        private static List<TrashTreasure> GetSaloonTreasureList()
         {
             List<TrashTreasure> treasures = new List<TrashTreasure>();
             treasures.Add(CreateTreasure(SObject.quartzIndex, "Quartz", 0.48, 1, 3));
@@ -230,7 +185,7 @@ namespace BetterTrashCans.Config
             return treasures;
         }
 
-        private static List<TrashTreasure> GetArtifactTreasureList()
+        private static List<TrashTreasure> GetEvelynGeorgeTreasureList()
         {
             List<TrashTreasure> treasures = new List<TrashTreasure>();
             treasures.Add(CreateTreasure(96, "Dwarf Scroll I", 0.01));
@@ -280,150 +235,150 @@ namespace BetterTrashCans.Config
             return treasures;
         }
 
-        private static List<TrashTreasure> GetGemsTreasureList()
-        {
-            List<TrashTreasure> treasures = new List<TrashTreasure>();
-            treasures.Add(CreateTreasure(SObject.emeraldIndex, "Emerald", 0.094364, 1, 2));
-            treasures.Add(CreateTreasure(SObject.aquamarineIndex, "Aquamarine", 0.131062, 1, 3));
-            treasures.Add(CreateTreasure(SObject.rubyIndex, "Ruby", 0.094364, 1, 2));
-            treasures.Add(CreateTreasure(SObject.amethystClusterIndex, "Amethyst", 0.235911, 1, 4));
-            treasures.Add(CreateTreasure(SObject.topazIndex, "Topaz", 0.294889, 1, 5));
-            treasures.Add(CreateTreasure(SObject.sapphireIndex, "Jade", 0.117955, 1, 2));
-            treasures.Add(CreateTreasure(SObject.diamondIndex, "Diamond", 0.031455));
+        //private static List<TrashTreasure> GetGemsTreasureList()
+        //{
+        //    List<TrashTreasure> treasures = new List<TrashTreasure>();
+        //    treasures.Add(CreateTreasure(SObject.emeraldIndex, "Emerald", 0.094364, 1, 2));
+        //    treasures.Add(CreateTreasure(SObject.aquamarineIndex, "Aquamarine", 0.131062, 1, 3));
+        //    treasures.Add(CreateTreasure(SObject.rubyIndex, "Ruby", 0.094364, 1, 2));
+        //    treasures.Add(CreateTreasure(SObject.amethystClusterIndex, "Amethyst", 0.235911, 1, 4));
+        //    treasures.Add(CreateTreasure(SObject.topazIndex, "Topaz", 0.294889, 1, 5));
+        //    treasures.Add(CreateTreasure(SObject.sapphireIndex, "Jade", 0.117955, 1, 2));
+        //    treasures.Add(CreateTreasure(SObject.diamondIndex, "Diamond", 0.031455));
 
-            return treasures;
-        }
+        //    return treasures;
+        //}
 
-        private static List<TrashTreasure> GetOreTreasureList()
-        {
-            List<TrashTreasure> treasures = new List<TrashTreasure>();
-            treasures.Add(CreateTreasure(SObject.copper, "Copper Ore", 0.49, 5, 15));
-            treasures.Add(CreateTreasure(SObject.iron, "Iron Ore", 0.34, 3, 13));
-            treasures.Add(CreateTreasure(SObject.gold, "Gold Ore", 0.14, 2, 10));
-            treasures.Add(CreateTreasure(SObject.iridium, "Iriduim Ore", 0.03, 1, 6));
+        //private static List<TrashTreasure> GetOreTreasureList()
+        //{
+        //    List<TrashTreasure> treasures = new List<TrashTreasure>();
+        //    treasures.Add(CreateTreasure(SObject.copper, "Copper Ore", 0.49, 5, 15));
+        //    treasures.Add(CreateTreasure(SObject.iron, "Iron Ore", 0.34, 3, 13));
+        //    treasures.Add(CreateTreasure(SObject.gold, "Gold Ore", 0.14, 2, 10));
+        //    treasures.Add(CreateTreasure(SObject.iridium, "Iriduim Ore", 0.03, 1, 6));
 
-            return treasures;
-        }
+        //    return treasures;
+        //}
 
-        private static List<TrashTreasure> GetBarTreasureList()
-        {
-            List<TrashTreasure> treasures = new List<TrashTreasure>();
-            treasures.Add(CreateTreasure(SObject.copperBar, "Copper Bar", 0.49));
-            treasures.Add(CreateTreasure(SObject.ironBar, "Iron Bar", 0.34));
-            treasures.Add(CreateTreasure(SObject.goldBar, "Gold Bar", 0.14));
-            treasures.Add(CreateTreasure(SObject.iridiumBar, "Iridium Bar", 0.03));
-            return treasures;
-        }
+        //private static List<TrashTreasure> GetBarTreasureList()
+        //{
+        //    List<TrashTreasure> treasures = new List<TrashTreasure>();
+        //    treasures.Add(CreateTreasure(SObject.copperBar, "Copper Bar", 0.49));
+        //    treasures.Add(CreateTreasure(SObject.ironBar, "Iron Bar", 0.34));
+        //    treasures.Add(CreateTreasure(SObject.goldBar, "Gold Bar", 0.14));
+        //    treasures.Add(CreateTreasure(SObject.iridiumBar, "Iridium Bar", 0.03));
+        //    return treasures;
+        //}
 
-        private static List<TrashTreasure> GetTackleTreasureList()
-        {
-            List<TrashTreasure> treasures = new List<TrashTreasure>();
-            treasures.Add(CreateTreasure(686, "Spinner", 0.136));
-            treasures.Add(CreateTreasure(687, "Dressed Spinner", 0.068));
-            treasures.Add(CreateTreasure(691, "Barbed Hook", 0.068));
-            treasures.Add(CreateTreasure(692, "Lead Bobber", 0.341));
-            treasures.Add(CreateTreasure(693, "Treasure Hunter", 0.091));
-            treasures.Add(CreateTreasure(694, "Trap Bobber", 0.136));
-            treasures.Add(CreateTreasure(695, "Cork Bobber", 0.091));
-            treasures.Add(CreateTreasure(703, "Magnet", 0.068));
+        //private static List<TrashTreasure> GetTackleTreasureList()
+        //{
+        //    List<TrashTreasure> treasures = new List<TrashTreasure>();
+        //    treasures.Add(CreateTreasure(686, "Spinner", 0.136));
+        //    treasures.Add(CreateTreasure(687, "Dressed Spinner", 0.068));
+        //    treasures.Add(CreateTreasure(691, "Barbed Hook", 0.068));
+        //    treasures.Add(CreateTreasure(692, "Lead Bobber", 0.341));
+        //    treasures.Add(CreateTreasure(693, "Treasure Hunter", 0.091));
+        //    treasures.Add(CreateTreasure(694, "Trap Bobber", 0.136));
+        //    treasures.Add(CreateTreasure(695, "Cork Bobber", 0.091));
+        //    treasures.Add(CreateTreasure(703, "Magnet", 0.068));
 
-            return treasures;
-        }
+        //    return treasures;
+        //}
 
-        private static List<TrashTreasure> GetTotemTreasureList()
-        {
-            List<TrashTreasure> treasures = new List<TrashTreasure>();
-            treasures.Add(CreateTreasure(681, "Rain Totem", 0.25));
-            treasures.Add(CreateTreasure(688, "Warp Totem: Farm", 0.25));
-            treasures.Add(CreateTreasure(689, "Warp Totem: Mountains", 0.25));
-            treasures.Add(CreateTreasure(690, "Warp Totem: Beach", 0.25));
+        //private static List<TrashTreasure> GetTotemTreasureList()
+        //{
+        //    List<TrashTreasure> treasures = new List<TrashTreasure>();
+        //    treasures.Add(CreateTreasure(681, "Rain Totem", 0.25));
+        //    treasures.Add(CreateTreasure(688, "Warp Totem: Farm", 0.25));
+        //    treasures.Add(CreateTreasure(689, "Warp Totem: Mountains", 0.25));
+        //    treasures.Add(CreateTreasure(690, "Warp Totem: Beach", 0.25));
             
-            return treasures;
-        }
+        //    return treasures;
+        //}
 
-        private static List<TrashTreasure> GetSpringSeedTreasureList()
-        {
-            List<TrashTreasure> treasures = new List<TrashTreasure>();
-            treasures.Add(CreateTreasure(427, "Tulip Bulb", 0.209, 15, 30));
-            treasures.Add(CreateTreasure(429, "Jazz Seeds", 0.139, 15, 30));
-            treasures.Add(CreateTreasure(472, "Parsnip Seeds", 0.209, 15, 30));
-            treasures.Add(CreateTreasure(474, "Cauliflower Seeds", 0.052, 5, 20));
-            treasures.Add(CreateTreasure(475, "Potato Seeds", 0.084, 10, 25));
-            treasures.Add(CreateTreasure(476, "Garlic Seeds", 0.104, 10, 25));
-            treasures.Add(CreateTreasure(477, "Kale Seeds", 0.06, 5, 20));
-            treasures.Add(CreateTreasure(478, "Rhubarb Seeds", 0.042, 1, 15));
-            treasures.Add(CreateTreasure(495, "Spring Seeds", 0.06, 5, 20));
-            treasures.Add(CreateTreasure(745, "Strawberry Seeds", 0.042, 5, 15));
+        //private static List<TrashTreasure> GetSpringSeedTreasureList()
+        //{
+        //    List<TrashTreasure> treasures = new List<TrashTreasure>();
+        //    treasures.Add(CreateTreasure(427, "Tulip Bulb", 0.209, 15, 30));
+        //    treasures.Add(CreateTreasure(429, "Jazz Seeds", 0.139, 15, 30));
+        //    treasures.Add(CreateTreasure(472, "Parsnip Seeds", 0.209, 15, 30));
+        //    treasures.Add(CreateTreasure(474, "Cauliflower Seeds", 0.052, 5, 20));
+        //    treasures.Add(CreateTreasure(475, "Potato Seeds", 0.084, 10, 25));
+        //    treasures.Add(CreateTreasure(476, "Garlic Seeds", 0.104, 10, 25));
+        //    treasures.Add(CreateTreasure(477, "Kale Seeds", 0.06, 5, 20));
+        //    treasures.Add(CreateTreasure(478, "Rhubarb Seeds", 0.042, 1, 15));
+        //    treasures.Add(CreateTreasure(495, "Spring Seeds", 0.06, 5, 20));
+        //    treasures.Add(CreateTreasure(745, "Strawberry Seeds", 0.042, 5, 15));
 
-            return treasures;
-        }
+        //    return treasures;
+        //}
 
-        private static List<TrashTreasure> GetSummerSeedTreasureList()
-        {
-            List<TrashTreasure> treasures = new List<TrashTreasure>();
-            treasures.Add(CreateTreasure(431, "Sunflower Seeds", 0.019, 5, 10));
-            treasures.Add(CreateTreasure(453, "Poppy Seeds", 0.039, 5, 15));
-            treasures.Add(CreateTreasure(455, "Spangle Seeds", 0.077, 10, 25));
-            treasures.Add(CreateTreasure(479, "Melon Seeds", 0.048, 5, 20));
-            treasures.Add(CreateTreasure(480, "Tomato Seeds", 0.077, 10, 25));
-            treasures.Add(CreateTreasure(481, "Blueberry Seeds", 0.048, 5, 20));
-            treasures.Add(CreateTreasure(482, "Pepper Seeds", 0.097, 10, 25));
-            treasures.Add(CreateTreasure(483, "Wheat Seeds", 0.387, 15, 30));
-            treasures.Add(CreateTreasure(484, "Radish Seeds", 0.097, 10, 25));
-            treasures.Add(CreateTreasure(485, "Red Cabbage Seeds", 0.039, 5, 15));
-            treasures.Add(CreateTreasure(486, "Starfruit Seeds", 0.01, 1, 7));
-            treasures.Add(CreateTreasure(487, "Corn Seeds", 0.026, 5, 10));
-            treasures.Add(CreateTreasure(496, "Summer Seeds", 0.035, 5, 20));
+        //private static List<TrashTreasure> GetSummerSeedTreasureList()
+        //{
+        //    List<TrashTreasure> treasures = new List<TrashTreasure>();
+        //    treasures.Add(CreateTreasure(431, "Sunflower Seeds", 0.019, 5, 10));
+        //    treasures.Add(CreateTreasure(453, "Poppy Seeds", 0.039, 5, 15));
+        //    treasures.Add(CreateTreasure(455, "Spangle Seeds", 0.077, 10, 25));
+        //    treasures.Add(CreateTreasure(479, "Melon Seeds", 0.048, 5, 20));
+        //    treasures.Add(CreateTreasure(480, "Tomato Seeds", 0.077, 10, 25));
+        //    treasures.Add(CreateTreasure(481, "Blueberry Seeds", 0.048, 5, 20));
+        //    treasures.Add(CreateTreasure(482, "Pepper Seeds", 0.097, 10, 25));
+        //    treasures.Add(CreateTreasure(483, "Wheat Seeds", 0.387, 15, 30));
+        //    treasures.Add(CreateTreasure(484, "Radish Seeds", 0.097, 10, 25));
+        //    treasures.Add(CreateTreasure(485, "Red Cabbage Seeds", 0.039, 5, 15));
+        //    treasures.Add(CreateTreasure(486, "Starfruit Seeds", 0.01, 1, 7));
+        //    treasures.Add(CreateTreasure(487, "Corn Seeds", 0.026, 5, 10));
+        //    treasures.Add(CreateTreasure(496, "Summer Seeds", 0.035, 5, 20));
             
-            return treasures;
-        }
+        //    return treasures;
+        //}
 
-        private static List<TrashTreasure> GetFallSeedTreasureList()
-        {
-            List<TrashTreasure> treasures = new List<TrashTreasure>();
-            treasures.Add(CreateTreasure(299, "Amaranth Seeds", 0.067, 5, 20));
-            treasures.Add(CreateTreasure(425, "Fairy Seeds", 0.023, 5, 10));
-            treasures.Add(CreateTreasure(488, "Eggplant Seeds", 0.233, 15, 30));
-            treasures.Add(CreateTreasure(489, "Artichoke Seeds", 0.155, 15, 30));
-            treasures.Add(CreateTreasure(490, "Pumpkin Seeds", 0.047, 5, 15));
-            treasures.Add(CreateTreasure(492, "Yam Seeds", 0.078, 10, 25));
-            treasures.Add(CreateTreasure(491, "Bok Choy Seeds", 0.093, 10, 25));
-            treasures.Add(CreateTreasure(493, "Cranberry Seeds", 0.019, 5, 10));
-            treasures.Add(CreateTreasure(494, "Beet Seeds", 0.233, 1, 20));           
-            treasures.Add(CreateTreasure(497, "Fall Seeds", 0.052, 5, 20));
+        //private static List<TrashTreasure> GetFallSeedTreasureList()
+        //{
+        //    List<TrashTreasure> treasures = new List<TrashTreasure>();
+        //    treasures.Add(CreateTreasure(299, "Amaranth Seeds", 0.067, 5, 20));
+        //    treasures.Add(CreateTreasure(425, "Fairy Seeds", 0.023, 5, 10));
+        //    treasures.Add(CreateTreasure(488, "Eggplant Seeds", 0.233, 15, 30));
+        //    treasures.Add(CreateTreasure(489, "Artichoke Seeds", 0.155, 15, 30));
+        //    treasures.Add(CreateTreasure(490, "Pumpkin Seeds", 0.047, 5, 15));
+        //    treasures.Add(CreateTreasure(492, "Yam Seeds", 0.078, 10, 25));
+        //    treasures.Add(CreateTreasure(491, "Bok Choy Seeds", 0.093, 10, 25));
+        //    treasures.Add(CreateTreasure(493, "Cranberry Seeds", 0.019, 5, 10));
+        //    treasures.Add(CreateTreasure(494, "Beet Seeds", 0.233, 1, 20));           
+        //    treasures.Add(CreateTreasure(497, "Fall Seeds", 0.052, 5, 20));
             
-            return treasures;
-        }
+        //    return treasures;
+        //}
 
-        private static List<TrashTreasure> GetWinterSeedTreasureList()
-        {
-            List<TrashTreasure> treasures = new List<TrashTreasure>();
-            treasures.Add(CreateTreasure(297, "Grass Starter", 0.10, 1, 5));
-            treasures.Add(CreateTreasure(498, "Winter Seeds", 0.85, 10, 25));
-            treasures.Add(CreateTreasure(802, "Cactus Seeds", 0.05, 1, 3));            
-            return treasures;
-        }
+        //private static List<TrashTreasure> GetWinterSeedTreasureList()
+        //{
+        //    List<TrashTreasure> treasures = new List<TrashTreasure>();
+        //    treasures.Add(CreateTreasure(297, "Grass Starter", 0.10, 1, 5));
+        //    treasures.Add(CreateTreasure(498, "Winter Seeds", 0.85, 10, 25));
+        //    treasures.Add(CreateTreasure(802, "Cactus Seeds", 0.05, 1, 3));            
+        //    return treasures;
+        //}
 
-        private static List<TrashTreasure> GetOtherTreasureList()
-        {
-            List<TrashTreasure> treasures = new List<TrashTreasure>();            
-            treasures.Add(CreateTreasure(167, "Joja Cola", 0.005));
-            treasures.Add(CreateTreasure(168, "Trash", 0.005));
-            treasures.Add(CreateTreasure(169, "Driftwood", 0.005));
-            treasures.Add(CreateTreasure(170, "Broken Glasses", 0.005));
-            treasures.Add(CreateTreasure(171, "Broken CD", 0.005));
-            treasures.Add(CreateTreasure(172, "Soggy Newspaper", 0.005));            
-            treasures.Add(CreateTreasure(SObject.coal, "Coal", 0.955, 3, 15));
-            treasures.Add(CreateTreasure(423, "Rice", 0.015, 1, 3));
+        //private static List<TrashTreasure> GetOtherTreasureList()
+        //{
+        //    List<TrashTreasure> treasures = new List<TrashTreasure>();            
+        //    treasures.Add(CreateTreasure(167, "Joja Cola", 0.005));
+        //    treasures.Add(CreateTreasure(168, "Trash", 0.005));
+        //    treasures.Add(CreateTreasure(169, "Driftwood", 0.005));
+        //    treasures.Add(CreateTreasure(170, "Broken Glasses", 0.005));
+        //    treasures.Add(CreateTreasure(171, "Broken CD", 0.005));
+        //    treasures.Add(CreateTreasure(172, "Soggy Newspaper", 0.005));            
+        //    treasures.Add(CreateTreasure(SObject.coal, "Coal", 0.955, 3, 15));
+        //    treasures.Add(CreateTreasure(423, "Rice", 0.015, 1, 3));
                         
-            return treasures;
-        }
+        //    return treasures;
+        //}
 
-        private static List<TrashTreasure> GetCustomTreasureList()
-        {
-            List<TrashTreasure> treasures = new List<TrashTreasure>();
-            return treasures;
-        }
+        //private static List<TrashTreasure> GetCustomTreasureList()
+        //{
+        //    List<TrashTreasure> treasures = new List<TrashTreasure>();
+        //    return treasures;
+        //}
 
         private static TrashTreasure CreateTreasure(int id, string name, double chance, int minAmount, int maxAmount)
         {

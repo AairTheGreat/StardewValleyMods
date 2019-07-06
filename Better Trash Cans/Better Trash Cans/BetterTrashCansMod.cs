@@ -32,7 +32,7 @@ namespace BetterTrashCans
         internal HarmonyInstance harmony { get; private set; }
 
         internal ModConfig config;
-        internal Dictionary<TREASURE_GROUP, TreasureGroup> treasureGroups;
+        internal Dictionary<TRASHCANS, Trashcan> treasureGroups;
 
         public override void Entry(IModHelper helper)
         {
@@ -45,11 +45,17 @@ namespace BetterTrashCans
                 harmony.Patch(typeof(Town).GetMethod("checkAction"), new HarmonyMethod(typeof(TrashCanOverrider).GetMethod("prefix_betterTrashCans")));
 
                 helper.Events.GameLoop.SaveLoaded += GameLoop_SaveLoaded;
-
+                helper.Events.GameLoop.DayStarted += GameLoop_DayStarted;
                 Type type = typeof(Game1);
                 FieldInfo info = type.GetField("multiplayer", BindingFlags.NonPublic | BindingFlags.Static);
                 multiplayer = info.GetValue(null) as Multiplayer;
             }
+        }
+
+        private void GameLoop_DayStarted(object sender, DayStartedEventArgs e)
+        {
+            // Update trash can settings.
+
         }
 
         private void GameLoop_SaveLoaded(object sender, SaveLoadedEventArgs e)

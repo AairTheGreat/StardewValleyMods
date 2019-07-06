@@ -185,20 +185,20 @@ namespace BetterTrashCans.GamePatch
             }
         }
 
-        internal static Item GetTreasure()
+        internal static Item GetTreasure(TRASHCANS index)
         {
             List<Item> rewards = new List<Item>();
 
             //Treasure Groups
-            List<TreasureGroup> possibleGroups = BetterTrashCansMod.Instance.treasureGroups.Values
-                .Where(group => group.Enabled == true)
-                .OrderBy(group => group.GroupChance)
-                .ToList();
-                        
-            TreasureGroup selectedTreasureGroup = possibleGroups.ChooseItem(Game1.random);
+            //List<TrashcanGroup> possibleGroups = BetterTrashCansMod.Instance.treasureGroups.Values
+            //    .Where(group => group.Enabled == true)
+            //    .OrderBy(group => group.GroupChance)
+            //    .ToList();
+
+            Trashcan trashcan = BetterTrashCansMod.Instance.treasureGroups[index]; //possibleGroups.ChooseItem(Game1.random);
                 
             // Possible treasure based on selected treasure group selected above.
-            List<TrashTreasure> possibleLoot = new List<TrashTreasure>(selectedTreasureGroup.treasureList)
+            List<TrashTreasure> possibleLoot = new List<TrashTreasure>(trashcan.treasureList)
                 .Where(loot => loot.Enabled)
                 .OrderBy(loot => loot.Chance)
                 .ThenBy(loot => loot.Id)
@@ -206,7 +206,7 @@ namespace BetterTrashCans.GamePatch
 
             if (possibleLoot.Count == 0)
             {
-                BetterTrashCansMod.Instance.Monitor.Log($"   Group: {selectedTreasureGroup.GroupID}, No Possible Loot Found... check the logic");               
+                BetterTrashCansMod.Instance.Monitor.Log($"   Group: {trashcan.TrashcanGroupID}, No Possible Loot Found... check the logic");               
             }
 
             TrashTreasure treasure = possibleLoot.ChooseItem(Game1.random);
@@ -224,21 +224,20 @@ namespace BetterTrashCans.GamePatch
 
             // Create reward item
             Item reward;
-            if (selectedTreasureGroup.GroupID == TREASURE_GROUP.Rings)                    
-            {
-                reward = new Ring(id);
-            }
-            else if (selectedTreasureGroup.GroupID == TREASURE_GROUP.Boots)
-            {
-                reward = new Boots(id);
-            }
-            else
-            {
+            //if (trashcan.TrashcanGroupID == TRASHCANS.Rings)                    
+            //{
+            //    reward = new Ring(id);
+            //}
+            //else if (trashcan.TrashcanGroupID == TRASHCANS.Boots)
+            //{
+            //    reward = new Boots(id);
+            //}
+            //else
+            //{
                 // Random quantity
                 int count = Game1.random.Next(treasure.MinAmount, treasure.MaxAmount);
-                reward = new StardewValley.Object(id, count);
-                reward = new StardewValley.Object(id, count);
-            }
+                reward = new StardewValley.Object(id, count);                
+            //}
 
             return reward;
         }

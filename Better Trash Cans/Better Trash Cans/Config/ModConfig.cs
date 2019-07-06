@@ -15,7 +15,8 @@ namespace BetterTrashCans.Config
         public double baseChancePercent { get; set; }
         public int FriendshipPoints { get; set; }
         public int LinusFriendshipPoints { get; set; }
-        //public int maxNumberOfOrePointsGathered { get; set; }
+        public int WaitTimeIfFoundNothing { get; set; }
+        public int WaitTimeIfFoundSomething { get; set; }
         //public bool showHudData { get; set; }
         //public int hudXPostion { get; set; }
         //public int hudYPostion { get; set; }
