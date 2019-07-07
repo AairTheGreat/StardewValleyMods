@@ -1,4 +1,4 @@
-[Better Panning](https://github.com/AairTheGreat/StardewValleyMods/tree/master/Better%20Panning) is a [Stardew Valley](http://stardewvalley.net/) mod which improves the panning gameplay.
+[Better Trash Cans](https://github.com/AairTheGreat/StardewValleyMods/tree/master/Better%20Trash%20Cans) is a [Stardew Valley](http://stardewvalley.net/) mod which improves the panning gameplay.
                                                                                                            
 **This documentation is for modders and player. See the [Nexus page](https://www.nexusmods.com/stardewvalley/mods/4161) if you want the compiled mod.**
                                                                                                            
