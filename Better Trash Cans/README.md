@@ -6,7 +6,7 @@
 * [Install](#install)
 * [Introduction](#introduction)
 * [Configuration Setting](#configuration-setting)
-  * [Overview of config.json](#Overview_of_config.json)
+  * [Overview of config.json](#Overviewofconfig.json)
     - [enableMod](#enableMod)
     - [useCustomTrashcanTreasure](#useCustomTrashcanTreasure)
     - [allowMultipleItemsPerDay](#allowMultipleItemsPerDay)
