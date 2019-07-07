@@ -1,6 +1,5 @@
-﻿
-using BetterTrashCans.Data;
-using BetterTrashCans.Framework;
+﻿using BetterTrashcans.Data;
+using BetterTrashcans.Framework;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Characters;
@@ -11,9 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using xTile.Dimensions;
 
-namespace BetterTrashCans.GamePatch
+namespace BetterTrashcans.GamePatch
 {
-   static class TrashCanOverrider
+   static class TrashcanOverrider
    {
         public static void prefix_betterTrashCans(Town __instance, Location tileLocation, ref Farmer who, ref IList<bool> ___garbageChecked) 
         {
@@ -32,8 +31,8 @@ namespace BetterTrashCans.GamePatch
                     {
                         if (CanCheckTrashcan((TRASHCANS)index))
                         {                            
-                            BetterTrashCansMod.Instance.trashcans[(TRASHCANS)index].LastTimeChecked = Game1.timeOfDay;
-                            BetterTrashCansMod.Instance.Monitor.Log($"Checked {(TRASHCANS)index} - Game time of day: {Game1.timeOfDay}");
+                            BetterTrashcansMod.Instance.trashcans[(TRASHCANS)index].LastTimeChecked = Game1.timeOfDay;
+                            BetterTrashcansMod.Instance.Monitor.Log($"Checked {(TRASHCANS)index} - Game time of day: {Game1.timeOfDay}");
 
                             ___garbageChecked[index] = true;
                             __instance.playSound("trashcan");
@@ -49,15 +48,15 @@ namespace BetterTrashCans.GamePatch
         private static void CheckForTreasure(int index, ref Farmer player)
         {
             Random random = new Random((int)Game1.uniqueIDForThisGame / 2 + (int)Game1.stats.DaysPlayed + 777 + index + Game1.timeOfDay);
-            if (random.NextDouble() < BetterTrashCansMod.Instance.config.baseChancePercent + Game1.dailyLuck)
+            if (random.NextDouble() < BetterTrashcansMod.Instance.config.baseChancePercent + Game1.dailyLuck)
             {
                 Item reward = GetTreasure(index, random);
 
                 if (reward != null)
                 {
                     player.addItemByMenuIfNecessary(reward, (ItemGrabMenu.behaviorOnItemSelect)null);
-                    BetterTrashCansMod.Instance.trashcans[(TRASHCANS)index].LastTimeFoundItem = Game1.timeOfDay;
-                    BetterTrashCansMod.Instance.Monitor.Log($"Got treasure from {(TRASHCANS)index} - Game time of day: {Game1.timeOfDay}");
+                    BetterTrashcansMod.Instance.trashcans[(TRASHCANS)index].LastTimeFoundItem = Game1.timeOfDay;
+                    BetterTrashcansMod.Instance.Monitor.Log($"Got treasure from {(TRASHCANS)index} - Game time of day: {Game1.timeOfDay}");
                 }
             }
         }
@@ -67,22 +66,22 @@ namespace BetterTrashCans.GamePatch
             bool canCheckForItems = false;
 
             //Has the trashcan been checked today?
-            if (BetterTrashCansMod.Instance.trashcans[can].LastTimeChecked == -1) //LastTimeChecked defaults per day to -1
+            if (BetterTrashcansMod.Instance.trashcans[can].LastTimeChecked == -1) //LastTimeChecked defaults per day to -1
             {
                 // You have never checked that can...
                 canCheckForItems = true;
             }
-            else if (BetterTrashCansMod.Instance.config.allowTrashCanRecheck) //You have check the trashcan before.... and you can recheck it
+            else if (BetterTrashcansMod.Instance.config.allowTrashCanRecheck) //You have check the trashcan before.... and you can recheck it
             {
                 //See if enough time has pasted since last check
                 if (CanCheckBasedOnLastCheckTime(can))
                 {                    
-                    if (BetterTrashCansMod.Instance.trashcans[can].LastTimeFoundItem == -1)
+                    if (BetterTrashcansMod.Instance.trashcans[can].LastTimeFoundItem == -1)
                     {
                         //Enough time has passed, and never found anything...
                         canCheckForItems = true;
                     } 
-                    else if (BetterTrashCansMod.Instance.config.allowMultipleItemsPerDay) // So you have found at least something before
+                    else if (BetterTrashcansMod.Instance.config.allowMultipleItemsPerDay) // So you have found at least something before
                     {
                         //See if enough time has pasted since last found item
                         canCheckForItems = CanCheckBasedOnLastFoundTime(can);
@@ -95,14 +94,14 @@ namespace BetterTrashCans.GamePatch
 
         private static bool CanCheckBasedOnLastCheckTime(TRASHCANS can)
         {
-            return Game1.timeOfDay >= GetWaitTime(BetterTrashCansMod.Instance.trashcans[can].LastTimeChecked,
-                        BetterTrashCansMod.Instance.config.WaitTimeIfFoundNothing);
+            return Game1.timeOfDay >= GetWaitTime(BetterTrashcansMod.Instance.trashcans[can].LastTimeChecked,
+                        BetterTrashcansMod.Instance.config.WaitTimeIfFoundNothing);
         }
 
         private static bool CanCheckBasedOnLastFoundTime(TRASHCANS can)
         {
-            return Game1.timeOfDay >= GetWaitTime(BetterTrashCansMod.Instance.trashcans[can].LastTimeFoundItem,
-                BetterTrashCansMod.Instance.config.WaitTimeIfFoundSomething);
+            return Game1.timeOfDay >= GetWaitTime(BetterTrashcansMod.Instance.trashcans[can].LastTimeFoundItem,
+                BetterTrashcansMod.Instance.config.WaitTimeIfFoundSomething);
         }
 
         private static int GetWaitTime(int time, int addMinutes)
@@ -119,15 +118,15 @@ namespace BetterTrashCans.GamePatch
             Character character = Utility.isThereAFarmerOrCharacterWithinDistance(new Vector2((float)tileLocation.X, (float)tileLocation.Y), 7, location);
             if (character != null && character is NPC && !(character is Horse))
             {
-                BetterTrashCansMod.SendMulitplayerMessage("TrashCan", Game1.player.Name, character.Name);
+                BetterTrashcansMod.SendMulitplayerMessage("TrashCan", Game1.player.Name, character.Name);
 
                 if (character.Name.Equals("Linus"))
                 {
                     character.doEmote(32, true);
                     (character as NPC).setNewDialogue(Game1.content.LoadString("Data\\ExtraDialogue:Town_DumpsterDiveComment_Linus"), true, true);
-                    player.changeFriendship(BetterTrashCansMod.Instance.config.LinusFriendshipPoints, character as NPC);
+                    player.changeFriendship(BetterTrashcansMod.Instance.config.LinusFriendshipPoints, character as NPC);
                     changedFrienship = true;
-                    BetterTrashCansMod.SendMulitplayerMessage("LinusTrashCan");
+                    BetterTrashcansMod.SendMulitplayerMessage("LinusTrashCan");
                 }
                 else if ((character as NPC).Age == 2)
                 {
@@ -146,7 +145,7 @@ namespace BetterTrashCans.GamePatch
                 }
                 if (!changedFrienship)
                 {
-                    player.changeFriendship(BetterTrashCansMod.Instance.config.FriendshipPoints, character as NPC);
+                    player.changeFriendship(BetterTrashcansMod.Instance.config.FriendshipPoints, character as NPC);
                 }
 
                 Game1.drawDialogue(character as NPC);
@@ -155,7 +154,7 @@ namespace BetterTrashCans.GamePatch
 
         private static Item GetCustomTrashTreasure(TRASHCANS index)
         {
-            Trashcan trashcan = BetterTrashCansMod.Instance.trashcans[index];
+            Trashcan trashcan = BetterTrashcansMod.Instance.trashcans[index];
 
             // Possible treasure based on selected treasure group selected above.
             List<TrashTreasure> possibleLoot = new List<TrashTreasure>(trashcan.treasureList)
@@ -166,7 +165,7 @@ namespace BetterTrashCans.GamePatch
 
             if (possibleLoot.Count == 0)
             {
-                BetterTrashCansMod.Instance.Monitor.Log($"   Group: {trashcan.TrashcanGroupID}, No Possible Loot Found... check the logic");
+                BetterTrashcansMod.Instance.Monitor.Log($"   Group: {trashcan.TrashcanID}, No Possible Loot Found... check the logic");
             }
 
             TrashTreasure treasure = possibleLoot.ChooseItem(Game1.random);
@@ -252,7 +251,7 @@ namespace BetterTrashCans.GamePatch
 
         internal static Item GetTreasure(int index, Random random, int X = 0, int Y = 0)
         {
-            if (BetterTrashCansMod.Instance.config.useCustomTrashcanTreasure)
+            if (BetterTrashcansMod.Instance.config.useCustomTrashcanTreasure)
             {
                 return GetCustomTrashTreasure((TRASHCANS) index);
             }

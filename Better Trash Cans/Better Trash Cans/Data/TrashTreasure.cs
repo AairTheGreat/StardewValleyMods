@@ -1,7 +1,7 @@
-﻿using BetterTrashCans.Framework;
+﻿using BetterTrashcans.Framework;
 using StardewValley;
 
-namespace BetterTrashCans.Data
+namespace BetterTrashcans.Data
 {
     public class TrashTreasure : IWeighted
     {

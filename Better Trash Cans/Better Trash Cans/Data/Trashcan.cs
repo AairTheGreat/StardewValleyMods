@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BetterTrashCans.Data
+namespace BetterTrashcans.Data
 {
     //  Trash Can           Index
     //==============================
@@ -25,7 +25,7 @@ namespace BetterTrashCans.Data
 
     public class Trashcan 
     {
-        public TRASHCANS TrashcanGroupID { get; set; }
+        public TRASHCANS TrashcanID { get; set; }
 
         public int LastTimeChecked { get; set; }
 
@@ -35,7 +35,7 @@ namespace BetterTrashCans.Data
 
         public Trashcan(TRASHCANS id)
         {
-            this.TrashcanGroupID = id;
+            this.TrashcanID = id;
             this.LastTimeChecked = -1;
             this.LastTimeFoundItem = -1;
         }

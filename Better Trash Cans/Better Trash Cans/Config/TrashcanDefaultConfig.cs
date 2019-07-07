@@ -1,8 +1,7 @@
-﻿using BetterTrashCans.Data;
-using SObject = StardewValley.Object;
+﻿using BetterTrashcans.Data;
 using System.Collections.Generic;
 
-namespace BetterTrashCans.Config
+namespace BetterTrashcans.Config
 {
     public static class TrashcanDefaultConfig
     {
@@ -17,7 +16,7 @@ namespace BetterTrashCans.Config
             groups.Add(TRASHCANS.STARDROP_SALOON, CreateTrashcan(TRASHCANS.STARDROP_SALOON));
             groups.Add(TRASHCANS.EVELYN_GEORGE, CreateTrashcan(TRASHCANS.EVELYN_GEORGE));
 
-            BetterTrashCansMod.Instance.Helper.Data.WriteJsonFile(file, groups);
+            BetterTrashcansMod.Instance.Helper.Data.WriteJsonFile(file, groups);
 
             return groups;
         }

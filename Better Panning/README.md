@@ -37,7 +37,7 @@
 * [See Also](#see-also)
 
 ## Install
-1. [Install the latest version of SMAPI](https://smapi.io/).
+1. If needed, [Install the latest version of SMAPI](https://smapi.io/).
 2. Install [this mod from Nexus mods](https://www.nexusmods.com/stardewvalley/mods/4161).
 3. Run the game using SMAPI.
 
@@ -258,7 +258,7 @@ Each game location/area can be configured to setup where panning spots can show 
 
 If a game location file is deleted then the next time a player goes to the that area the file will be recreated. 
 
-For example, if oyu are using a custom area like a Big Coop with a fishing pond, then you will need to delete the Big Coop.json and next time Stardew Valley is started then panning spots might show up in the modded Big Coop.  It does depend on a few things like if the water is considered open water or not, but the mod scans for valid panning spots if there is no data file. 
+For example, if you are using a custom area like a Big Coop with a fishing pond, then you will need to delete the Big Coop.json and next time Stardew Valley is started then panning spots might show up in the modded Big Coop.  It does depend on a few things like if the water is considered open water or not, but the mod scans for valid panning spots if there is no data file. 
 
 ## Troubleshooting
 
@@ -291,6 +291,7 @@ Currently this mod does not support localization but it is planned to support it
 * [Stardew Wiki](https://stardewvalleywiki.com) - To the people maintaining this very useful site.
 * [Stardew ID List](https://stardewids.com/) - To the people maintaining this very useful site.
 * [Teh's Fishing Overhaul](https://www.nexusmods.com/stardewvalley/mods/866) - TehPers, helped inspire the HUD used in this mod
+* To my testers: SparkyTheCat and My Better Half  -- Thank you!
 
 ## See Also
 * [Stardew Valley](https://www.stardewvalley.net/) - Home page and blog

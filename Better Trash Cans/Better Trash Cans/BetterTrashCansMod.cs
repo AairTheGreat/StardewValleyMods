@@ -1,6 +1,6 @@
-﻿using BetterTrashCans.Config;
-using BetterTrashCans.Data;
-using BetterTrashCans.GamePatch;
+﻿using BetterTrashcans.Config;
+using BetterTrashcans.Data;
+using BetterTrashcans.GamePatch;
 using Harmony;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
@@ -11,11 +11,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace BetterTrashCans
+namespace BetterTrashcans
 {
-    public class BetterTrashCansMod : Mod
+    public class BetterTrashcansMod : Mod
     {
-        public static BetterTrashCansMod Instance { get; private set; }
+        public static BetterTrashcansMod Instance { get; private set; }
         internal static Multiplayer multiplayer;
 
         internal HarmonyInstance harmony { get; private set; }
@@ -31,7 +31,7 @@ namespace BetterTrashCans
             if (config.enableMod)
             {
                 harmony = HarmonyInstance.Create("com.aairthegreat.mod.trashcan");
-                harmony.Patch(typeof(Town).GetMethod("checkAction"), new HarmonyMethod(typeof(TrashCanOverrider).GetMethod("prefix_betterTrashCans")));
+                harmony.Patch(typeof(Town).GetMethod("checkAction"), new HarmonyMethod(typeof(TrashcanOverrider).GetMethod("prefix_betterTrashCans")));
 
                 string trashcanFile = Path.Combine("DataFiles", "Trashcans.json");
                 trashcans = this.Helper.Data.ReadJsonFile<Dictionary<TRASHCANS, Trashcan>>(trashcanFile) ?? TrashcanDefaultConfig.CreateTrashcans(trashcanFile);
