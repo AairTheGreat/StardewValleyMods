@@ -1,4 +1,4 @@
-[Better Trash Cans](https://github.com/AairTheGreat/StardewValleyMods/tree/master/Better%20Trash%20Cans) is a [Stardew Valley](http://stardewvalley.net/) mod which changes the way the towns trash cans work.
+[Better Trash Cans](https://github.com/AairTheGreat/StardewValleyMods/tree/master/Better%20Trash%20Cans) is a [Stardew Valley](http://stardewvalley.net/) mod which changes the way the town's trashcans work.
                                                                                                            
 **This documentation is for modders and player. See the [Nexus page - Not Setup Yet](https://www.nexusmods.com/stardewvalley/mods/4161) if you want the compiled mod.**
                                                                                                            
@@ -6,7 +6,7 @@
 * [Install](#install)
 * [Introduction](#introduction)
 * [Configuration Setting](#configuration-setting)
-  * [Overview of config.json](#Overview-of-config.json)
+  * [Overview of config.json](#Overview_of_config.json)
     - [enableMod](#enableMod)
     - [useCustomTrashcanTreasure](#useCustomTrashcanTreasure)
     - [allowMultipleItemsPerDay](#allowMultipleItemsPerDay)
@@ -32,7 +32,7 @@
 
 ## Introduction
 ### What is Better Trash Cans?
-This mod changes behavior of the towns trashcans and hopefully for the better.  
+This mod changes behavior of the town's trashcans and hopefully for the better.  
 
 Better Trash Cans allows you to: 
 * Fine-tune each trashcan item list
