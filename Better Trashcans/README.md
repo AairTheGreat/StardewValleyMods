@@ -1,4 +1,4 @@
-[Better Trash Cans](https://github.com/AairTheGreat/StardewValleyMods/tree/master/Better%20Trash%20Cans) is a [Stardew Valley](http://stardewvalley.net/) mod which changes the way the town's trashcans work.
+[Better Trashcans](https://github.com/AairTheGreat/StardewValleyMods/tree/master/Better%20Trashcans) is a [Stardew Valley](http://stardewvalley.net/) mod which changes the way the town's trashcans work.
                                                                                                            
 **This documentation is for modders and player. See the [Nexus page - Not Setup Yet](https://www.nexusmods.com/stardewvalley/mods/4161) if you want the compiled mod.**
                                                                                                            
@@ -31,7 +31,7 @@
 3. Run the game using SMAPI.
 
 ## Introduction
-### What is Better Trash Cans?
+### What is Better Trashcans?
 This mod changes behavior of the town's trashcans and hopefully for the better.  
 
 Better Trash Cans allows you to: 
@@ -136,13 +136,13 @@ Here is an example of a treasure group entry looks like:
 
 ## Troubleshooting
 
-### Bad Edits to config json file
+### Bad edits to config json file
 It possible that you decided to edit the config file and now it's not working as expected.  To get back to the default config.json file:
 1. Stop Stardew Valley, if running.
 2. Delete the config.json file.
 3. Start Stardew Valley the defaut.json file will be recreated.
 
-### Bad Edits to Trashcans json file
+### Bad edits to Trashcans json file
 It possible that you decided to edit the treasure config file and now it's not working as expected.  To get back to the default treasure.json file:
 1. Stop Stardew Valley, if running.
 2. Delete the treasure.json file.
