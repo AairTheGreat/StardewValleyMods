@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BetterTrashcans.Framework
+namespace BetterGarbageCans.Framework
 {
     public static class ListExtensions
     {

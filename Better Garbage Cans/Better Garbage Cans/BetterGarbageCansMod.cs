@@ -1,6 +1,6 @@
-﻿using BetterTrashcans.Config;
-using BetterTrashcans.Data;
-using BetterTrashcans.GamePatch;
+﻿using BetterGarbageCans.Config;
+using BetterGarbageCans.Data;
+using BetterGarbageCans.GamePatch;
 using Harmony;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
@@ -11,17 +11,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace BetterTrashcans
+namespace BetterGarbageCans
 {
-    public class BetterTrashcansMod : Mod
+    public class BetterGarbageCansMod : Mod
     {
-        public static BetterTrashcansMod Instance { get; private set; }
+        public static BetterGarbageCansMod Instance { get; private set; }
         internal static Multiplayer multiplayer;
 
         internal HarmonyInstance harmony { get; private set; }
 
         internal ModConfig config;
-        internal Dictionary<TRASHCANS, Trashcan> trashcans;
+        internal Dictionary<GARBAGE_CANS, GarbageCan> garbageCans;
 
         public override void Entry(IModHelper helper)
         {
@@ -30,11 +30,11 @@ namespace BetterTrashcans
 
             if (config.enableMod)
             {
-                harmony = HarmonyInstance.Create("com.aairthegreat.mod.trashcan");
-                harmony.Patch(typeof(Town).GetMethod("checkAction"), new HarmonyMethod(typeof(TrashcanOverrider).GetMethod("prefix_betterTrashCans")));
+                harmony = HarmonyInstance.Create("com.aairthegreat.mod.garbagecan");
+                harmony.Patch(typeof(Town).GetMethod("checkAction"), new HarmonyMethod(typeof(GarbageCanOverrider).GetMethod("prefix_betterGarbageCans")));
 
-                string trashcanFile = Path.Combine("DataFiles", "Trashcans.json");
-                trashcans = this.Helper.Data.ReadJsonFile<Dictionary<TRASHCANS, Trashcan>>(trashcanFile) ?? TrashcanDefaultConfig.CreateTrashcans(trashcanFile);
+                string garbageCanFile = Path.Combine("DataFiles", "garbagecans.json");
+                garbageCans = this.Helper.Data.ReadJsonFile<Dictionary<GARBAGE_CANS, GarbageCan>>(garbageCanFile) ?? GarbageCanDefaultConfig.CreateGarbageCans(garbageCanFile);
 
 
                 helper.Events.GameLoop.SaveLoaded += GameLoop_SaveLoaded;
@@ -47,11 +47,11 @@ namespace BetterTrashcans
 
         private void GameLoop_DayStarted(object sender, DayStartedEventArgs e)
         {
-            // Update trash can settings.
-            foreach (int i in Enum.GetValues(typeof(TRASHCANS)))
+            // Update garbage can settings.
+            foreach (int i in Enum.GetValues(typeof(GARBAGE_CANS)))
             {
-                trashcans[(TRASHCANS)i].LastTimeChecked = -1;
-                trashcans[(TRASHCANS)i].LastTimeFoundItem = -1;
+                garbageCans[(GARBAGE_CANS)i].LastTimeChecked = -1;
+                garbageCans[(GARBAGE_CANS)i].LastTimeFoundItem = -1;
             }
         }
 

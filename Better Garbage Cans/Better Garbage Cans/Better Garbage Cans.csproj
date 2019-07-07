@@ -7,8 +7,8 @@
     <ProjectGuid>{51AD2FBF-587D-4727-9B31-580A4B344745}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BetterTrashcans</RootNamespace>
-    <AssemblyName>Better Trashcans</AssemblyName>
+    <RootNamespace>BetterGarbageCans</RootNamespace>
+    <AssemblyName>Better Garbage Cans</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -64,16 +64,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BetterTrashcansMod.cs" />
+    <Compile Include="BetterGarbageCansMod.cs" />
     <Compile Include="Config\ModConfig.cs" />
     <Compile Include="Config\ModConfigDefaultConfig.cs" />
-    <Compile Include="Config\TrashcanDefaultConfig.cs" />
+    <Compile Include="Config\GarbageCanDefaultConfig.cs" />
     <Compile Include="Data\TrashTreasure.cs" />
-    <Compile Include="Data\Trashcan.cs" />
+    <Compile Include="Data\GarbageCan.cs" />
     <Compile Include="Framework\IWeighted.cs" />
     <Compile Include="Framework\ListExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GamePatch\TrashcanOverrider.cs" />
+    <Compile Include="GamePatch\GarbageCanOverrider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="manifest.json" />

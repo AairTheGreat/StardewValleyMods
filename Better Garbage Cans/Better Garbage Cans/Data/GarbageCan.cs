@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace BetterTrashcans.Data
+namespace BetterGarbageCans.Data
 {
-    //  Trash Can           Index
+    //  Garbage Can         Index
     //==============================
     //  Jodi/Sam            0
     //  Haley/Emily         1
@@ -12,7 +12,7 @@ namespace BetterTrashcans.Data
     //  Stardrop Saloon     5
     //  Evelyn/George       6
 
-    public enum TRASHCANS
+    public enum GARBAGE_CANS
     {
         JODI_SAM=0,
         EMILY_HALEY,
@@ -23,9 +23,9 @@ namespace BetterTrashcans.Data
         EVELYN_GEORGE
     }
 
-    public class Trashcan 
+    public class GarbageCan 
     {
-        public TRASHCANS TrashcanID { get; set; }
+        public GARBAGE_CANS GarbageCanID { get; set; }
 
         public int LastTimeChecked { get; set; }
 
@@ -33,9 +33,9 @@ namespace BetterTrashcans.Data
 
         public List<TrashTreasure> treasureList { get; set; }
 
-        public Trashcan(TRASHCANS id)
+        public GarbageCan(GARBAGE_CANS id)
         {
-            this.TrashcanID = id;
+            this.GarbageCanID = id;
             this.LastTimeChecked = -1;
             this.LastTimeFoundItem = -1;
         }

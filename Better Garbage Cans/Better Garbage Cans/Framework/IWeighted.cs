@@ -1,4 +1,4 @@
-﻿namespace BetterTrashcans.Framework
+﻿namespace BetterGarbageCans.Framework
 {
     public interface IWeighted
     {

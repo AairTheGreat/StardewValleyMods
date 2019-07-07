@@ -273,13 +273,13 @@ If you are using a modded area and/or there are problems with panning spots not 
 It possible that you decided to edit the config file and now it's not working as expected.  To get back to the default config.json file:
 1. Stop Stardew Valley, if running.
 2. Delete the config.json file.
-3. Start Stardew Valley the defaut.json file will be recreated.
+3. Start Stardew Valley the default json file will be recreated.
 
 ### Bad Edits to treasure json file
 It possible that you decided to edit the treasure config file and now it's not working as expected.  To get back to the default treasure.json file:
 1. Stop Stardew Valley, if running.
 2. Delete the treasure.json file.
-3. Start Stardew Valley the defaut.json file will be recreated.
+3. Start Stardew Valley the default json file will be recreated.
  
 ## Localization
 

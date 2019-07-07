@@ -1,56 +1,56 @@
-﻿using BetterTrashcans.Data;
+﻿using BetterGarbageCans.Data;
 using System.Collections.Generic;
 
-namespace BetterTrashcans.Config
+namespace BetterGarbageCans.Config
 {
-    public static class TrashcanDefaultConfig
+    public static class GarbageCanDefaultConfig
     {
-        public static Dictionary<TRASHCANS, Trashcan> CreateTrashcans(string file)
+        public static Dictionary<GARBAGE_CANS, GarbageCan> CreateGarbageCans(string file)
         {
-            Dictionary<TRASHCANS, Trashcan> groups = new Dictionary<TRASHCANS, Trashcan>();
-            groups.Add(TRASHCANS.JODI_SAM, CreateTrashcan(TRASHCANS.JODI_SAM));
-            groups.Add(TRASHCANS.EMILY_HALEY, CreateTrashcan(TRASHCANS.EMILY_HALEY));
-            groups.Add(TRASHCANS.MAYOR_LEWIS, CreateTrashcan(TRASHCANS.MAYOR_LEWIS));
-            groups.Add(TRASHCANS.GUNTHER, CreateTrashcan(TRASHCANS.GUNTHER));
-            groups.Add(TRASHCANS.CLINT, CreateTrashcan(TRASHCANS.CLINT));
-            groups.Add(TRASHCANS.STARDROP_SALOON, CreateTrashcan(TRASHCANS.STARDROP_SALOON));
-            groups.Add(TRASHCANS.EVELYN_GEORGE, CreateTrashcan(TRASHCANS.EVELYN_GEORGE));
+            Dictionary<GARBAGE_CANS, GarbageCan> groups = new Dictionary<GARBAGE_CANS, GarbageCan>();
+            groups.Add(GARBAGE_CANS.JODI_SAM, CreateGarbageCan(GARBAGE_CANS.JODI_SAM));
+            groups.Add(GARBAGE_CANS.EMILY_HALEY, CreateGarbageCan(GARBAGE_CANS.EMILY_HALEY));
+            groups.Add(GARBAGE_CANS.MAYOR_LEWIS, CreateGarbageCan(GARBAGE_CANS.MAYOR_LEWIS));
+            groups.Add(GARBAGE_CANS.GUNTHER, CreateGarbageCan(GARBAGE_CANS.GUNTHER));
+            groups.Add(GARBAGE_CANS.CLINT, CreateGarbageCan(GARBAGE_CANS.CLINT));
+            groups.Add(GARBAGE_CANS.STARDROP_SALOON, CreateGarbageCan(GARBAGE_CANS.STARDROP_SALOON));
+            groups.Add(GARBAGE_CANS.EVELYN_GEORGE, CreateGarbageCan(GARBAGE_CANS.EVELYN_GEORGE));
 
-            BetterTrashcansMod.Instance.Helper.Data.WriteJsonFile(file, groups);
+            BetterGarbageCansMod.Instance.Helper.Data.WriteJsonFile(file, groups);
 
             return groups;
         }
 
-        private static Trashcan CreateTrashcan(TRASHCANS id)
+        private static GarbageCan CreateGarbageCan(GARBAGE_CANS id)
         {
-           Trashcan newGroup = new Trashcan(id);
+           GarbageCan newGroup = new GarbageCan(id);
             newGroup.treasureList = GetTreasureList(id);
             return newGroup;
         }
 
-        private static List<TrashTreasure> GetTreasureList(TRASHCANS id)
+        private static List<TrashTreasure> GetTreasureList(GARBAGE_CANS id)
         {
             switch (id)
             {
-                case TRASHCANS.JODI_SAM:
+                case GARBAGE_CANS.JODI_SAM:
                     return GetJodiSamTreasureList();    
                     
-                case TRASHCANS.EMILY_HALEY:
+                case GARBAGE_CANS.EMILY_HALEY:
                     return GetEmilyHaleyTreasureList();      
                     
-                case TRASHCANS.MAYOR_LEWIS:
+                case GARBAGE_CANS.MAYOR_LEWIS:
                     return GetMayorLewisTreasureList(); 
                     
-                case TRASHCANS.GUNTHER:
+                case GARBAGE_CANS.GUNTHER:
                     return GetGuntherTreasureList();    
                     
-                case TRASHCANS.CLINT:
+                case GARBAGE_CANS.CLINT:
                     return GetClintTreasureList();   
                     
-                case TRASHCANS.STARDROP_SALOON:
+                case GARBAGE_CANS.STARDROP_SALOON:
                     return GetSaloonTreasureList();    
                     
-                case TRASHCANS.EVELYN_GEORGE:
+                case GARBAGE_CANS.EVELYN_GEORGE:
                     return GetEvelynGeorgeTreasureList();     
                     
                 default:

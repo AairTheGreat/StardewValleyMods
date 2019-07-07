@@ -1,4 +1,4 @@
-﻿namespace BetterTrashcans.Config
+﻿namespace BetterGarbageCans.Config
 {
     public static class ModConfigDefaultConfig
     {
@@ -8,16 +8,16 @@
             {
                 enableMod = true,
                 allowMultipleItemsPerDay = true,
-                allowTrashCanRecheck = true,
+                allowGarbageCanRecheck = true,
                 baseChancePercent = 0.20,   //Base Game 
-                useCustomTrashcanTreasure = true,
+                useCustomGarbageCanTreasure = true,
                 FriendshipPoints = -25,     //Base Game 
                 LinusFriendshipPoints = 5,  //Base Game 
                 WaitTimeIfFoundNothing = 60,
                 WaitTimeIfFoundSomething = 240
             };
 
-            BetterTrashcansMod.Instance.Helper.Data.WriteJsonFile(file, config);
+            BetterGarbageCansMod.Instance.Helper.Data.WriteJsonFile(file, config);
             return config;
         }
     }
