@@ -6,7 +6,7 @@
 * [Install](#install)
 * [Introduction](#introduction)
 * [Configuration Setting](#configuration-setting)
-  * [Overview of config.json](#overview-of-config.json)
+  * [Overview of config json file](#overview-of-config-json-file)
     - [enableMod](#enableMod)
     - [useCustomTrashcanTreasure](#useCustomTrashcanTreasure)
     - [allowMultipleItemsPerDay](#allowMultipleItemsPerDay)
@@ -16,7 +16,7 @@
     - [LinusFriendshipPoints](#LinusFriendshipPoints)
     - [WaitTimeIfFoundNothing](#WaitTimeIfFoundNothing)
     - [WaitTimeIfFoundSomething](#WaitTimeIfFoundSomething)
-  * [Overview of Trashcans.json](#overview-of-Trashcans.json)
+  * [Overview of Trashcans json file](#overview-of-trashcans-json-file)
     - [Trashcan Data](#trashcan-data)
     - [Treasure List Data](#Treasure-List)  
 * [Troubleshooting](#troubleshooting)  
@@ -41,7 +41,7 @@ Better Trash Cans allows you to:
 * Various configurable settings
 
 ## Configuration Setting
-### Overview of config.json
+### Overview of config json file
 Once this mod is installed and been started at least once, you can adjust some settings.  
 
 If you don't have a config.json file, then the config file will be created when you first run Stardew Valley with this mod.
@@ -75,7 +75,7 @@ Per trashcan, The amount of time in minutes that you have to wait to try again i
 Per trashcan, the amount of time in minutes that you have to wait to try again if you did found something.  
 - Default Value: 240 
 
-### Overview of Trashcans.json
+### Overview of Trashcans json file
 Everyone loves trashcan diving!  Therefore, it's time to talk about how the configuration file is put together.  Here is the general workflow:
 1. Player goes and finds a trashcan.
 2. The game generates a random number.
