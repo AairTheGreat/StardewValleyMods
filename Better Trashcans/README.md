@@ -20,8 +20,8 @@
     - [Trashcan Data](#trashcan-data)
     - [Treasure List Data](#Treasure-List)  
 * [Troubleshooting](#troubleshooting)  
-  * [Bad Edits to config.json](#Bad-Edits-to-config.json)
-  * [Bad Edits to treasure.json](#Bad-Edits-to-treasure.json)
+  * [Bad Edits to config json file](#Bad-Edits-to-config-json-file)
+  * [Bad Edits to treasure json file](#Bad-Edits-to-treasure-json-file)
 * [Localization](#localization)
 * [See Also](#see-also)
 
@@ -136,13 +136,13 @@ Here is an example of a treasure group entry looks like:
 
 ## Troubleshooting
 
-### Bad Edits to config.json
+### Bad Edits to config json file
 It possible that you decided to edit the config file and now it's not working as expected.  To get back to the default config.json file:
 1. Stop Stardew Valley, if running.
 2. Delete the config.json file.
 3. Start Stardew Valley the defaut.json file will be recreated.
 
-### Bad Edits to Trashcans.json
+### Bad Edits to Trashcans json file
 It possible that you decided to edit the treasure config file and now it's not working as expected.  To get back to the default treasure.json file:
 1. Stop Stardew Valley, if running.
 2. Delete the treasure.json file.

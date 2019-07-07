@@ -6,7 +6,7 @@
 * [Install](#install)
 * [Introduction](#introduction)
 * [Configuration Setting](#configuration-setting)
-  * [Overview of config.json](#Overview-of-config.json)
+  * [Overview of config json file](#Overview-of-config-json-file)
     - [showDistance](#showdistance)
     - [sp_alwaysCreatePanningSpots](#spalwaysCreatePanningSpots)
     - [mp_alwaysCreatePanningSpots](#mpalwaysCreatePanningSpots)
@@ -25,14 +25,14 @@
     - [enableAllSecondYearSeedsOnFirstYear](#enableAllSecondYearSeedsOnFirstYear)
     - [useCustomFarmMaps](#useCustomFarmMaps)
     - [customMaps](#customMaps)
-  * [Overview of treasure.json](#Overview-of-treasure.json)
+  * [Overview of treasure json file](#Overview-of-treasure-json-file)
     - [Treasure Groups](#Treasure-Groups)
     - [Treasure Data](#Treasure-List)
   * [Overview of DataFiles Folder](#Overview-of-DataFiles-Folder)
 * [Troubleshooting](#troubleshooting)
-  * [Bad Panning Spots in a Game Location/Area](#Bad-Panning-Spots-in-a-Game-Location/Area)
-  * [Bad Edits to config.json](#Bad-Edits-to-config.json)
-  * [Bad Edits to treasure.json](#Bad-Edits-to-treasure.json)
+  * [Bad Panning Spots in a Game Location/Area](#Bad-Panning-Spots-in-a-Game-Location)
+  * [Bad Edits to config json file](#Bad-Edits-to-config-json-file)
+  * [Bad Edits to treasure json file](#Bad-Edits-to-treasure-json-file)
 * [Localization](#localization)
 * [See Also](#see-also)
 
@@ -64,7 +64,7 @@ Better Panning allows you to:
 * Various configurable settings
 
 ## Configuration Setting
-### Overview of config.json
+### Overview of config json file
 Once this mod is installed and you have the pan you can adjust some settings.  
 
 If you don't have a config.json file, then the config file will be created when you first run Stardew Valley with this mod.
@@ -164,7 +164,7 @@ Here is an example where you have a riverland farm mod:
 
 When you first enter the farm, the mod will scan for valid panning spots and create the configured file but there could be unreachable spots.  This is where you can fine tune the file created "DataFiles\MyCoolFishingFarmMapMod.json" and remove unreachable spots.
 
-### Overview of treasure.json
+### Overview of treasure json file
 Everyone loves treasure!  Therefore, it's time to talk about how the configuration file is put together.  Here is the general workflow:
 1. Player goes and finds a panning spot.
 2. The game generates a random number.
@@ -262,20 +262,20 @@ For example, if you are using a custom area like a Big Coop with a fishing pond,
 
 ## Troubleshooting
 
-### Bad Panning Spots in a Game Location/Area
+### Bad Panning Spots in a Game Location
 If you are using a modded area and/or there are problems with panning spots not showing up or in the worng spots then there is an easy fix:  
 1. Stop Stardew Valley, if running.
 2. In the Better Panning mod folder there is a DataFiles folder.  Open that folder and find the file named <GameLocation>.json where the game location is the area with the problem.
 3. Delete the that file found in step 2. 
 4. Start Stardew Valley and go to the area.  It should work now and the file should be regenerated.
 
-### Bad Edits to config.json
+### Bad Edits to config json file
 It possible that you decided to edit the config file and now it's not working as expected.  To get back to the default config.json file:
 1. Stop Stardew Valley, if running.
 2. Delete the config.json file.
 3. Start Stardew Valley the defaut.json file will be recreated.
 
-### Bad Edits to treasure.json
+### Bad Edits to treasure json file
 It possible that you decided to edit the treasure config file and now it's not working as expected.  To get back to the default treasure.json file:
 1. Stop Stardew Valley, if running.
 2. Delete the treasure.json file.
