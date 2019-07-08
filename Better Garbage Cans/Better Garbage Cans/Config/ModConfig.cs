@@ -7,6 +7,8 @@
         public bool allowMultipleItemsPerDay { get; set; }
         public bool allowGarbageCanRecheck { get; set; }
         public double baseChancePercent { get; set; }
+        public double baseTrashChancePercent { get; set; }
+        public double birthdayGiftChancePercent { get; set; }
         public int FriendshipPoints { get; set; }
         public int LinusFriendshipPoints { get; set; }
         public int WaitTimeIfFoundNothing { get; set; }

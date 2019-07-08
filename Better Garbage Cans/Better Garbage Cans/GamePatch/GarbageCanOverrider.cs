@@ -158,7 +158,7 @@ namespace BetterGarbageCans.GamePatch
 
             // Possible treasure based on selected treasure group selected above.
             List<TrashTreasure> possibleLoot = new List<TrashTreasure>(garbageCan.treasureList)
-                .Where(loot => loot.Enabled)
+                .Where(loot => loot.Enabled && loot.IsValid())
                 .OrderBy(loot => loot.Chance)
                 .ThenBy(loot => loot.Id)
                 .ToList();

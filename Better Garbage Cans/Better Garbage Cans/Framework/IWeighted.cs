@@ -4,5 +4,6 @@
     {
         double GetWeight();
         bool GetEnabled();
+        bool IsValid();
     }
 }

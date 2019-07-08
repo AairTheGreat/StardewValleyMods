@@ -27,6 +27,6 @@ namespace BetterGarbageCans.Framework
             throw new ArgumentException("Source should contain positively weighted entries", nameof(source));
         }
 
-        public static double SumWeights<T>(this IEnumerable<T> source) where T : IWeighted => source.Where(e => e.GetEnabled() == true).Sum(e => e.GetWeight());
+        public static double SumWeights<T>(this IEnumerable<T> source) where T : IWeighted => source.Where(e => e.GetEnabled() == true && e.IsValid() == true).Sum(e => e.GetWeight());
     }
 }

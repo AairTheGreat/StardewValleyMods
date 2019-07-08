@@ -14,7 +14,9 @@
                 FriendshipPoints = -25,     //Base Game 
                 LinusFriendshipPoints = 5,  //Base Game 
                 WaitTimeIfFoundNothing = 60,
-                WaitTimeIfFoundSomething = 240
+                WaitTimeIfFoundSomething = 240,
+                baseTrashChancePercent = 0.30,
+                birthdayGiftChancePercent = 0.75
             };
 
             BetterGarbageCansMod.Instance.Helper.Data.WriteJsonFile(file, config);
