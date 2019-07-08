@@ -32,7 +32,7 @@ namespace BetterGarbageCans.GamePatch
                         if (CanCheckGarbageCan((GARBAGE_CANS)index))
                         {                            
                             BetterGarbageCansMod.Instance.garbageCans[(GARBAGE_CANS)index].LastTimeChecked = Game1.timeOfDay;
-                            BetterGarbageCansMod.Instance.Monitor.Log($"Checked {(GARBAGE_CANS)index} - Game time of day: {Game1.timeOfDay}");
+                            //BetterGarbageCansMod.Instance.Monitor.Log($"Checked {(GARBAGE_CANS)index} - Game time of day: {Game1.timeOfDay}");
 
                             ___garbageChecked[index] = true;
                             __instance.playSound("trashcan");
@@ -56,7 +56,7 @@ namespace BetterGarbageCans.GamePatch
                 {
                     player.addItemByMenuIfNecessary(reward, (ItemGrabMenu.behaviorOnItemSelect)null);
                     BetterGarbageCansMod.Instance.garbageCans[(GARBAGE_CANS)index].LastTimeFoundItem = Game1.timeOfDay;
-                    BetterGarbageCansMod.Instance.Monitor.Log($"Got treasure from {(GARBAGE_CANS)index} - Game time of day: {Game1.timeOfDay}");
+                    //BetterGarbageCansMod.Instance.Monitor.Log($"Got treasure from {(GARBAGE_CANS)index} - Game time of day: {Game1.timeOfDay}");
                 }
             }
         }
