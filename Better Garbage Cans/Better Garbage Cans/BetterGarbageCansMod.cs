@@ -169,6 +169,8 @@ namespace BetterGarbageCans
                     item.Chance += config.birthdayGiftChancePercent;
                     preBirthdayStartTime = item.AvailableStartTime;
                     preBirthdayEndTime = item.AvailableEndTime;
+                    item.AvailableStartTime = 600;
+                    item.AvailableEndTime = 2600;
                     foundItem = true;
                     break;
                 }
