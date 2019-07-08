@@ -216,7 +216,7 @@ Field                  | Purpose
 `MinAmount`        | The minimum number of items you can pan per panning spot.
 `MAxAmount`               | The maximum number of items you can pan per panning spot.
 `AllowDuplicates`          | If the item can be selected again if the mod feels like giving you more stuff.
-`Enabled`          | If the treasure is enable to be selected to become the player's treasure.  Note: If you change this setting, you should set the treasure group setting ManualOverride to true.
+`Enabled`          | If the treasure is enabled, then it can be selected to become the player's treasure.  Note: If you change this setting, you should set the treasure group setting ManualOverride to true.
 
 Here is an example of a treasure group entry looks like:
 ```

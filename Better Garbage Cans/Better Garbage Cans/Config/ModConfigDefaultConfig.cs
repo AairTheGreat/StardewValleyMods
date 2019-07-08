@@ -9,13 +9,14 @@
                 enableMod = true,
                 allowMultipleItemsPerDay = true,
                 allowGarbageCanRecheck = true,
-                baseChancePercent = 0.20,   //Base Game 
+                baseChancePercent = 0.25,   //5% more than Base Game 
                 useCustomGarbageCanTreasure = true,
                 FriendshipPoints = -25,     //Base Game 
                 LinusFriendshipPoints = 5,  //Base Game 
                 WaitTimeIfFoundNothing = 60,
                 WaitTimeIfFoundSomething = 240,
-                baseTrashChancePercent = 0.30,
+                baseTrashChancePercent = 0.25,
+                enableBirthdayGiftTrash = true,
                 birthdayGiftChancePercent = 0.75
             };
 

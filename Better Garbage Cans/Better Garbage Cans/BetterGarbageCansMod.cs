@@ -23,9 +23,13 @@ namespace BetterGarbageCans
 
         internal ModConfig config;
         internal Dictionary<GARBAGE_CANS, GarbageCan> garbageCans;
+
+        // Below are the variables handling birthday trash.
         internal List<NPC> allNPCCharacters = new List<NPC>();
         internal List<NPC> allNPCCharactersWithBirthdaysThisSeason = new List<NPC>();
         internal Item birthdayItem = null;
+        internal int preBirthdayStartTime;
+        internal int preBirthdayEndTime;
         internal GARBAGE_CANS birthdayCan;
 
         public override void Entry(IModHelper helper)
@@ -50,18 +54,39 @@ namespace BetterGarbageCans
             }
         }
 
+        private void GameLoop_DayStarted(object sender, DayStartedEventArgs e)
+        {
+            ResetGarbageCanLastTimes();
+            if (config.enableBirthdayGiftTrash)
+            {
+                SetupTheBirthdayTrash();
+            }
+        }
+
+        private void GameLoop_SaveLoaded(object sender, SaveLoadedEventArgs e)
+        {
+            if (Context.IsWorldReady)
+            {
+                if (config.enableBirthdayGiftTrash)
+                {
+                    allNPCCharacters = new List<NPC>();
+                    allNPCCharactersWithBirthdaysThisSeason = new List<NPC>();
+                    Utility.getAllCharacters(allNPCCharacters);
+                }
+
+                if (Helper.ModRegistry.IsLoaded("Pathoschild.Automate"))
+                {
+                    this.Monitor.Log("Found the Automate Mod, this mod is not fully compatible with this mod.");
+                }
+            }
+        }
+
         private void AddTrashToCans(double trashChance)
         {
             foreach (int i in Enum.GetValues(typeof(GARBAGE_CANS)))
             {
                 garbageCans[(GARBAGE_CANS)i].treasureList.Add(new TrashTreasure(168, "Trash", trashChance));
             }
-        }
-
-        private void GameLoop_DayStarted(object sender, DayStartedEventArgs e)
-        {
-            ResetGarbageCanLastTimes();
-            SetupTheBirthdayTrash();
         }
 
         private void ResetGarbageCanLastTimes()
@@ -73,13 +98,15 @@ namespace BetterGarbageCans
                 garbageCans[(GARBAGE_CANS)i].LastTimeFoundItem = -1;
             }
 
-            if (birthdayItem != null)
+            if (config.enableBirthdayGiftTrash && birthdayItem != null)
             {
                 foreach (TrashTreasure item in garbageCans[birthdayCan].treasureList)
                 {
                     if (item.Id == birthdayItem.ParentSheetIndex)
                     {
                         item.Chance -= config.birthdayGiftChancePercent;
+                        item.AvailableStartTime = preBirthdayStartTime;
+                        item.AvailableStartTime = preBirthdayEndTime;
                     }
                 }
                 birthdayItem = null;
@@ -96,9 +123,10 @@ namespace BetterGarbageCans
             {
                 if (npc.Birthday_Day == Game1.dayOfMonth + 1 || npc.Birthday_Day == Game1.dayOfMonth)
                 {
-                    birthdayItem = (Item)npc.getFavoriteItem();
                     //Found a birthday.
-                    //this.Monitor.Log($"NPC {npc.Name} Favorite Item: {npc.getFavoriteItem().Name}");
+
+                    birthdayItem = (Item)npc.getFavoriteItem();                    
+                                        
                     switch (npc.Name)
                     {
                         case "George":
@@ -139,6 +167,8 @@ namespace BetterGarbageCans
                 if (item.Id == favItem.ParentSheetIndex)
                 {
                     item.Chance += config.birthdayGiftChancePercent;
+                    preBirthdayStartTime = item.AvailableStartTime;
+                    preBirthdayEndTime = item.AvailableEndTime;
                     foundItem = true;
                     break;
                 }
@@ -147,30 +177,10 @@ namespace BetterGarbageCans
             if(!foundItem)
             {
                 garbageCans[can].treasureList.Add(new TrashTreasure(favItem.ParentSheetIndex, favItem.Name, config.birthdayGiftChancePercent));
+                preBirthdayStartTime = 600;
+                preBirthdayEndTime = 2600;
             }
         }
-
-        private void GameLoop_SaveLoaded(object sender, SaveLoadedEventArgs e)
-        {
-            if (Context.IsWorldReady )
-            {
-                allNPCCharacters = new List<NPC>();
-                allNPCCharactersWithBirthdaysThisSeason = new List<NPC>();
-                Utility.getAllCharacters(allNPCCharacters);
-                if (Helper.ModRegistry.IsLoaded("Pathoschild.Automate"))
-                {
-                    this.Monitor.Log("Found the Automate Mod, this mod is not fully compatible with this mod.");
-                }
-
-                foreach (NPC npc in allNPCCharacters)
-                {
-                    if (npc.CanSocialize || npc.Name == "Dwarf")
-                    {
-                        this.Monitor.Log($"NPC {npc.Name} Favorite Item: {npc.getFavoriteItem().Name}");
-                    }
-                }
-            }
-        }        
 
         internal static void SendMulitplayerMessage(string mesageType, string playerName = null, string npcName = null)
         {
