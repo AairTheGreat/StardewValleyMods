@@ -1,6 +1,6 @@
 [Better Garbage Cans](https://github.com/AairTheGreat/StardewValleyMods/tree/master/Better%20Garbage%20Cans) is a [Stardew Valley](http://stardewvalley.net/) mod which changes the way the town's garbage cans work.
                                                                                                            
-**This documentation is for modders and player. See the [Nexus page - Not Setup Yet](https://www.nexusmods.com/stardewvalley/mods/4161) if you want the compiled mod.**
+**This documentation is for modders and player. See the [Nexus page](https://www.nexusmods.com/stardewvalley/mods/4171) if you want the compiled mod.**
                                                                                                            
 ## Contents
 * [Install](#install)
@@ -30,7 +30,7 @@
 
 ## Install
 1. If needed, [Install the latest version of SMAPI](https://smapi.io/).
-2. Install [this mod from Nexus mods -NOT SETUP YET](https://www.nexusmods.com/stardewvalley/mods/4161).
+2. Install [this mod from Nexus mods](https://www.nexusmods.com/stardewvalley/mods/4171).
 3. Run the game using SMAPI.
 
 ## Introduction
