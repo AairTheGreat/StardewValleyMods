@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using StardewValley;
+using System.Collections.Generic;
 
 namespace BetterTrainLoot.Data
 {
@@ -27,19 +28,7 @@ namespace BetterTrainLoot.Data
         CHRISTMAS_TRAIN = 6
     }
 
-    //public enum TRAIN_CARS
-    //{
-    //    COAL=0,
-    //    ORES,
-    //    WOOD,
-    //    COMPARTMENTS,
-    //    GRASS,
-    //    HAY,
-    //    STONE,
-    //    GEODE,
-    //    UNKNOWN,
-    //    PRESENTS
-    //}
+    
 
     public class TrainData 
     {
@@ -50,6 +39,19 @@ namespace BetterTrainLoot.Data
         public TrainData(TRAINS id)
         {
             this.TrainCarID = id;
+        }
+
+        public void UpdateTrainLootChances(double todayLuck)
+        {            
+            //double todayLuck = Game1.dailyLuck;
+            double itemBaseChance = 0.0;
+            foreach (TrainTreasure item in this.treasureList)
+            {
+                itemBaseChance = Game1.random.NextDouble() / 10.0;  // The bestcase is 10% (0.1)
+                itemBaseChance = itemBaseChance + (itemBaseChance * todayLuck);
+
+                item.Chance = itemBaseChance * (double)item.Rarity;
+            }
         }
     }
 }

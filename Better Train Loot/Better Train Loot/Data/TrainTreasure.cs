@@ -3,34 +3,39 @@ using StardewValley;
 
 namespace BetterTrainLoot.Data
 {
+    public enum LOOT_RARITY
+    {
+        NONE = 0,
+        ULTRA_RARE = 1,
+        RARE = 2,     
+        UNCOMMON = 6,
+        COMMON = 10,
+    }
+
     public class TrainTreasure : IWeighted
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
-        
-        public double Chance { get; set; }
+
+        internal double Chance { get; set; }
 
         public bool Enabled { get; set; }
-                
-        public int AvailableStartTime { get; set; }
-        
-        public int AvailableEndTime { get; set; }
 
-        public TrainTreasure(int id, string name, double chance, int startTime = 600, int endTime = 2600, bool enabled = true)
+        public LOOT_RARITY Rarity {get; set;}
+
+        public TrainTreasure(int id, string name, double chance, LOOT_RARITY rarity, bool enabled = true)
         {
             this.Id = id;
             this.Name = name;
             this.Chance = chance;
             this.Enabled = enabled;
-            this.AvailableStartTime = startTime;
-            this.AvailableEndTime = endTime;
+            this.Rarity = rarity;            
         }
 
         public bool IsValid()
         {
-            int time = Game1.timeOfDay;
-            return  time >= this.AvailableStartTime && time <= this.AvailableEndTime;
+            return this.Rarity != LOOT_RARITY.NONE;
         }
 
         public double GetWeight()

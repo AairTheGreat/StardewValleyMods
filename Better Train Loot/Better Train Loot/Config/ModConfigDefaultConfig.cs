@@ -7,17 +7,10 @@
             ModConfig config = new ModConfig()
             {
                 enableMod = true,
-                allowMultipleItemsPerDay = true,
-                allowGarbageCanRecheck = true,
-                baseChancePercent = 0.25,   //5% more than Base Game 
-                useCustomGarbageCanTreasure = true,
-                FriendshipPoints = -25,     //Base Game 
-                LinusFriendshipPoints = 5,  //Base Game 
-                WaitTimeIfFoundNothing = 60,
-                WaitTimeIfFoundSomething = 240,
-                baseTrashChancePercent = 0.25,
-                enableBirthdayGiftTrash = true,
-                birthdayGiftChancePercent = 0.75
+                baseChancePercent = 0.375, // Base chance of getting an item   
+                useCustomTrainTreasure = true,
+                basePctChanceOfTrain = 0.15,
+                trainCreateDelay = 10000  //Base Game Setting
             };
 
             BetterTrainLootMod.Instance.Helper.Data.WriteJsonFile(file, config);

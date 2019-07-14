@@ -23,16 +23,14 @@ namespace BetterTrainLoot
 
         private int maxNumberOfTrains;
         private int numberOfTrains = 0;
-        private int trainCreateDelay = 7500;
+        private int startTimeOfFirstTrain = 600;
 
         internal TRAINS trainType;
 
         private double pctChanceOfNewTrain = 0.0;
-        private double basePctChanceOfTrain = 0.20;
 
         private bool overrideMaxTrains;
         private bool enableCreatedTrain = true;
-
 
         internal ModConfig config;
         internal Dictionary<TRAINS, TrainData> trainCars;
@@ -58,6 +56,15 @@ namespace BetterTrainLoot
 
             }
         }
+        private void Input_ButtonReleased(object sender, StardewModdingAPI.Events.ButtonReleasedEventArgs e)
+        {
+            if (e.Button == SButton.Y)
+            {
+                this.Monitor.Log("Player press Y... Choo choo");                
+                overrideMaxTrains = true;
+                enableCreatedTrain = true;
+            }
+        }
 
         private void GameLoop_SaveLoaded(object sender, StardewModdingAPI.Events.SaveLoadedEventArgs e)
         {
@@ -66,29 +73,23 @@ namespace BetterTrainLoot
 
         private void GameLoop_TimeChanged(object sender, StardewModdingAPI.Events.TimeChangedEventArgs e)
         {
-            if (railroad != null && Game1.player.currentLocation.IsOutdoors)
+            if (railroad != null && Game1.player.currentLocation.IsOutdoors && e.NewTime >= startTimeOfFirstTrain)
             {
                 if (enableCreatedTrain && ((railroad.train.Value == null && numberOfTrains < maxNumberOfTrains) || overrideMaxTrains))
                 {
                     if (Game1.random.NextDouble() <= pctChanceOfNewTrain || (railroad.train.Value == null && overrideMaxTrains))
                     {
-                        railroad.setTrainComing(trainCreateDelay);
+                        railroad.setTrainComing(config.trainCreateDelay);
                         numberOfTrains++;
                         overrideMaxTrains = false;
                         trainType = TRAINS.UNKNOWN;
                         this.Monitor.Log($"Setting train... Choo choo... {Game1.timeOfDay}");
                         enableCreatedTrain = false;
-                        if (railroad.train.Value != null)
-                        {
-                            this.Monitor.Log($"{Game1.timeOfDay}: Train type... {railroad.train.Value.type.Value} : {(TRAINS)railroad.train.Value.type.Value}");
-                        }
                     }
                 }
                 else if(railroad.train.Value != null && !enableCreatedTrain)
                 {
                     enableCreatedTrain = true;
-                    this.Monitor.Log($"Can create train again... {Game1.timeOfDay}");
-                    this.Monitor.Log($"{Game1.timeOfDay}: Train type... {railroad.train.Value.type.Value} : {(TRAINS)railroad.train.Value.type.Value}");
                     trainType = (TRAINS)railroad.train.Value.type.Value;
                 }
             }
@@ -96,50 +97,56 @@ namespace BetterTrainLoot
 
         private void GameLoop_DayStarted(object sender, StardewModdingAPI.Events.DayStartedEventArgs e)
         {
+            ResetDailyValues();
+            SetMaxNumberOfTrainsAndStartTime();
+            UpdateTrainLootChances();            
+        }
+
+        private void ResetDailyValues()
+        {
             overrideMaxTrains = false;
             enableCreatedTrain = true;
             numberOfTrains = 0;
-            pctChanceOfNewTrain = Game1.dailyLuck + basePctChanceOfTrain;
+            pctChanceOfNewTrain = Game1.dailyLuck + config.basePctChanceOfTrain;
+        }
+
+        private void SetMaxNumberOfTrainsAndStartTime()
+        {            
             switch (Game1.random.Next(0, 10))
             {
                 case 0:
                     maxNumberOfTrains = 0;
-                   
+                    startTimeOfFirstTrain = 2600;
                     break;
                 case 1:
                 case 2:
                 case 3:
                     maxNumberOfTrains = 1;
-                    
+                    startTimeOfFirstTrain = 1000;
                     break;
                 case 4:
                 case 5:
                 case 6:
                     maxNumberOfTrains = 3;
-                    
+                    startTimeOfFirstTrain = 800;
                     break;
                 case 7:
                 case 8:
                 case 9:
                     maxNumberOfTrains = 5;
-                   
+                    startTimeOfFirstTrain = 600;
                     break;
             }
-
             Monitor.Log($"Setting Max Trains to {maxNumberOfTrains}");
         }
 
-        private void Input_ButtonReleased(object sender, StardewModdingAPI.Events.ButtonReleasedEventArgs e)
+        private void UpdateTrainLootChances()
         {
-            if (e.Button == SButton.Y)
+            //Update the treasure chances for today
+            foreach (TrainData train in trainCars.Values)
             {
-                this.Monitor.Log("Player press Y... Choo choo");
-                //(Game1.getLocationFromName("Railroad") as Railroad).setTrainComing(7500);
-                overrideMaxTrains = true;
-                enableCreatedTrain = true;
+                train.UpdateTrainLootChances(Game1.dailyLuck);
             }
         }
-       
-        
     }
 }
