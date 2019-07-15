@@ -141,11 +141,11 @@ namespace BetterTrainLoot.Config
             treasures.Add(CreateTreasure(170, "Broken Glasses", LOOT_RARITY.COMMON));
             treasures.Add(CreateTreasure(171, "Broken CD", LOOT_RARITY.COMMON));
             treasures.Add(CreateTreasure(172, "Soggy Newspaper", LOOT_RARITY.COMMON));
-            treasures.Add(CreateTreasure(174, "Large Egg", LOOT_RARITY.RARE));
-            treasures.Add(CreateTreasure(176, "Egg", LOOT_RARITY.UNCOMMON));
+            treasures.Add(CreateTreasure(174, "Large White Egg", LOOT_RARITY.RARE));
+            treasures.Add(CreateTreasure(176, "White Egg", LOOT_RARITY.UNCOMMON));
             treasures.Add(CreateTreasure(178, "Hay", LOOT_RARITY.COMMON));
-            treasures.Add(CreateTreasure(180, "Egg", LOOT_RARITY.UNCOMMON));
-            treasures.Add(CreateTreasure(182, "Large Egg", LOOT_RARITY.RARE));
+            treasures.Add(CreateTreasure(180, "Brown Egg", LOOT_RARITY.UNCOMMON));
+            treasures.Add(CreateTreasure(182, "Large Brown Egg", LOOT_RARITY.RARE));
             treasures.Add(CreateTreasure(184, "Milk", LOOT_RARITY.UNCOMMON));
             treasures.Add(CreateTreasure(186, "Large Milk", LOOT_RARITY.RARE));
             treasures.Add(CreateTreasure(188, "Green Bean", LOOT_RARITY.RARE));
@@ -508,11 +508,11 @@ namespace BetterTrainLoot.Config
         {
             List<TrainTreasure> treasures = new List<TrainTreasure>();
             treasures.Add(CreateTreasure(167, "Joja Cola", LOOT_RARITY.COMMON));
-            treasures.Add(CreateTreasure(174, "Large Egg", LOOT_RARITY.RARE));
-            treasures.Add(CreateTreasure(176, "Egg", LOOT_RARITY.UNCOMMON));
+            treasures.Add(CreateTreasure(174, "Large White Egg", LOOT_RARITY.RARE));
+            treasures.Add(CreateTreasure(176, "White Egg", LOOT_RARITY.UNCOMMON));
             treasures.Add(CreateTreasure(178, "Hay", LOOT_RARITY.COMMON));
-            treasures.Add(CreateTreasure(180, "Egg", LOOT_RARITY.UNCOMMON));
-            treasures.Add(CreateTreasure(182, "Large Egg", LOOT_RARITY.RARE));
+            treasures.Add(CreateTreasure(180, "Brown Egg", LOOT_RARITY.UNCOMMON));
+            treasures.Add(CreateTreasure(182, "Large Brown Egg", LOOT_RARITY.RARE));
             treasures.Add(CreateTreasure(184, "Milk", LOOT_RARITY.UNCOMMON));
             treasures.Add(CreateTreasure(186, "Large Milk", LOOT_RARITY.RARE));
             treasures.Add(CreateTreasure(245, "Sugar", LOOT_RARITY.COMMON));
@@ -739,10 +739,10 @@ namespace BetterTrainLoot.Config
             treasures.Add(CreateTreasure(24, "Parsnip", LOOT_RARITY.UNCOMMON));
             treasures.Add(CreateTreasure(88, "Coconut", LOOT_RARITY.RARE));
             treasures.Add(CreateTreasure(90, "Cactus Fruit", LOOT_RARITY.RARE));
-            treasures.Add(CreateTreasure(174, "Large Egg", LOOT_RARITY.UNCOMMON));
-            treasures.Add(CreateTreasure(176, "Egg", LOOT_RARITY.UNCOMMON));
-            treasures.Add(CreateTreasure(180, "Egg", LOOT_RARITY.UNCOMMON));
-            treasures.Add(CreateTreasure(182, "Large Egg", LOOT_RARITY.UNCOMMON));
+            treasures.Add(CreateTreasure(174, "Large White Egg", LOOT_RARITY.UNCOMMON));
+            treasures.Add(CreateTreasure(176, "White Egg", LOOT_RARITY.UNCOMMON));
+            treasures.Add(CreateTreasure(180, "Brown Egg", LOOT_RARITY.UNCOMMON));
+            treasures.Add(CreateTreasure(182, "Large Brown Egg", LOOT_RARITY.UNCOMMON));
             treasures.Add(CreateTreasure(184, "Milk", LOOT_RARITY.UNCOMMON));
             treasures.Add(CreateTreasure(186, "Large Milk", LOOT_RARITY.UNCOMMON));
             treasures.Add(CreateTreasure(188, "Green Bean", LOOT_RARITY.RARE));

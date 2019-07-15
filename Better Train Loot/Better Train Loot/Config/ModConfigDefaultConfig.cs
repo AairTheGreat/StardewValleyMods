@@ -7,7 +7,7 @@
             ModConfig config = new ModConfig()
             {
                 enableMod = true,
-                baseChancePercent = 0.275, // Base chance of getting an item   
+                baseChancePercent = 0.20, // Base chance of getting an item   
                 useCustomTrainTreasure = true,
                 basePctChanceOfTrain = 0.15,
                 trainCreateDelay = 10000  //Base Game Setting

@@ -23,7 +23,7 @@ namespace BetterTrainLoot.GamePatch
 
         private static void CheckForTreasure(TRAINS trainType, Vector2 globalPosition)
         {
-            double chance = (trainType != TRAINS.PRESENT_TRAIN) ? BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck : 2.0 * BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck;
+            double chance = (trainType != TRAINS.PRESENT_TRAIN) ? BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck : 3.0 * BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck;
 
             if (Game1.random.NextDouble() <= chance && BetterTrainLootMod.Instance.config.useCustomTrainTreasure)
             {                
