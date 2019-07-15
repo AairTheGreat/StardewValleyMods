@@ -3,13 +3,8 @@ using BetterTrainLoot.Framework;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.BellsAndWhistles;
-using StardewValley.Characters;
-using StardewValley.Locations;
-using StardewValley.Menus;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using xTile.Dimensions;
 
 namespace BetterTrainLoot.GamePatch
 {
@@ -29,7 +24,9 @@ namespace BetterTrainLoot.GamePatch
 
         private static void CheckForTreasure(TRAINS trainType, Vector2 globalPosition)
         {
-            if (Game1.random.NextDouble() <= BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck && BetterTrainLootMod.Instance.config.useCustomTrainTreasure)
+            double chance = (trainType != TRAINS.PRESENT_TRAIN) ? BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck : (BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck) * 2.0;
+
+            if (Game1.random.NextDouble() <= chance && BetterTrainLootMod.Instance.config.useCustomTrainTreasure)
             {                
                 Item reward = GetCustomTrainTreasure(trainType);
 

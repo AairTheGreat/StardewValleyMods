@@ -1,5 +1,4 @@
 ﻿using BetterTrainLoot.Data;
-using System;
 using System.Collections.Generic;
 
 namespace BetterTrainLoot.Config
@@ -14,7 +13,7 @@ namespace BetterTrainLoot.Config
             groups.Add(TRAINS.COAL_TRAIN, CreateTrainLoot(TRAINS.COAL_TRAIN));
             groups.Add(TRAINS.PASSENGER_TRAIN, CreateTrainLoot(TRAINS.PASSENGER_TRAIN));
             groups.Add(TRAINS.PRISON_TRAIN, CreateTrainLoot(TRAINS.PRISON_TRAIN));
-            groups.Add(TRAINS.CHRISTMAS_TRAIN, CreateTrainLoot(TRAINS.CHRISTMAS_TRAIN));
+            groups.Add(TRAINS.PRESENT_TRAIN, CreateTrainLoot(TRAINS.PRESENT_TRAIN));
 
             BetterTrainLootMod.Instance.Helper.Data.WriteJsonFile(file, groups);
 
@@ -47,7 +46,7 @@ namespace BetterTrainLoot.Config
                 case TRAINS.PRISON_TRAIN:
                     return GetPrisonTrainTreasureList();   
                     
-                case TRAINS.CHRISTMAS_TRAIN:
+                case TRAINS.PRESENT_TRAIN:
                     return GetPresentCarTreasureList();
 
                 default:
@@ -985,22 +984,54 @@ namespace BetterTrainLoot.Config
         private static List<TrainTreasure> GetPresentCarTreasureList()
         {
             List<TrainTreasure> treasures = new List<TrainTreasure>();
-            treasures.Add(CreateTreasure(114, "Ancient Seed", LOOT_RARITY.COMMON));
-            treasures.Add(CreateTreasure(347, "Rare Seed", LOOT_RARITY.COMMON));
-            treasures.Add(CreateTreasure(499, "Ancient Seeds", LOOT_RARITY.COMMON));
-            treasures.Add(CreateTreasure(434, "Stardrop", LOOT_RARITY.COMMON));
-            treasures.Add(CreateTreasure(166, "Treasure Chest", LOOT_RARITY.COMMON));
-            treasures.Add(CreateTreasure(417, "Sweet Gem Berry", LOOT_RARITY.COMMON));
-            treasures.Add(CreateTreasure(74, "Prismatic Shard", LOOT_RARITY.COMMON));
-            treasures.Add(CreateTreasure(373, "Golden Pumpkin", LOOT_RARITY.COMMON));
-            treasures.Add(CreateTreasure(797, "Pearl", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(114, "Ancient Seed", LOOT_RARITY.RARE));
+            treasures.Add(CreateTreasure(347, "Rare Seed", LOOT_RARITY.RARE));
+            treasures.Add(CreateTreasure(499, "Ancient Seeds", LOOT_RARITY.RARE));
+            treasures.Add(CreateTreasure(434, "Stardrop", LOOT_RARITY.ULTRA_RARE));
+            treasures.Add(CreateTreasure(166, "Treasure Chest", LOOT_RARITY.RARE));
+            treasures.Add(CreateTreasure(417, "Sweet Gem Berry", LOOT_RARITY.RARE));
+            treasures.Add(CreateTreasure(74, "Prismatic Shard", LOOT_RARITY.ULTRA_RARE));
+            treasures.Add(CreateTreasure(373, "Golden Pumpkin", LOOT_RARITY.RARE));
+            treasures.Add(CreateTreasure(797, "Pearl", LOOT_RARITY.UNCOMMON));
+            treasures.Add(CreateTreasure(20, "Leek", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(72, "Diamond", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(201, "Complete Breakfast", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(221, "Pink Cake", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(60, "Emerald", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(607, "Roasted Hazelnuts", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(90, "Cactus Fruit", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(200, "Vegetable Medley", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(202, "Fried Calamari", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(213, "Fish Taco", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(66, "Amethyst", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(303, "Pale Ale", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(348, "Wine", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(715, "Lobster", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(206, "Pizza", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(224, "Spaghetti", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(88, "Coconut", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(207, "Bean Hotpot", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(155, "Super Cucumber", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(196, "Salad", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(18, "Daffodil", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(612, "Cranberry Candy", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(84, "Frozen Tear", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(214, "Crispy Bass", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(605, "Artichoke Dip", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(729, "Escargot", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(608, "Pumpkin Pie", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(595, "Fairy Rose", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(149, "Octopus", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(308, "Void Mayonnaise", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(230, "Red Plate", LOOT_RARITY.COMMON));
+            treasures.Add(CreateTreasure(222, "Rhubarb Pie", LOOT_RARITY.COMMON));
 
             return treasures;
         }
 
         private static TrainTreasure CreateTreasure(int id, string name, LOOT_RARITY rarity)
         {
-            double chance = 0.5;
+            double chance = 0.01;
             return new TrainTreasure(id, name, chance, rarity,  true);
         }        
     }
