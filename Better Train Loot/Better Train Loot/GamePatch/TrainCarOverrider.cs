@@ -10,21 +10,20 @@ namespace BetterTrainLoot.GamePatch
 {
    static class TrainCarOverrider
    {
-        public static void postfix_getTrainTreasure(TrainCar __instance, Vector2 globalPosition)
+        public static void postfix_getTrainTreasure(Vector2 globalPosition)
         {
-            if (__instance.loaded.Value > 0 && Game1.random.NextDouble() < 0.004 && ((double)globalPosition.X > 256.0 && (double)globalPosition.X < (double)(Game1.currentLocation.map.DisplayWidth - 256)))
+            if (Game1.random.NextDouble() < 0.003 && ((double)globalPosition.X > 256.0 && (double)globalPosition.X < (double)(Game1.currentLocation.map.DisplayWidth - 256)))
             {                
                 if (BetterTrainLootMod.Instance.trainType != TRAINS.UNKNOWN)
                 {                    
                     CheckForTreasure(BetterTrainLootMod.Instance.trainType, globalPosition);
-                }
-                --__instance.loaded.Value;
+                }                
             }
         }
 
         private static void CheckForTreasure(TRAINS trainType, Vector2 globalPosition)
         {
-            double chance = (trainType != TRAINS.PRESENT_TRAIN) ? BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck : (BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck) * 2.0;
+            double chance = (trainType != TRAINS.PRESENT_TRAIN) ? BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck : 2.0 * BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck;
 
             if (Game1.random.NextDouble() <= chance && BetterTrainLootMod.Instance.config.useCustomTrainTreasure)
             {                
