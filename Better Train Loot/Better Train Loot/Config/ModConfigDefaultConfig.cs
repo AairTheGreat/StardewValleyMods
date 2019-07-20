@@ -9,7 +9,9 @@
                 enableMod = true,
                 baseChancePercent = 0.20, // Base chance of getting an item   
                 useCustomTrainTreasure = true,
+                enableMaxTreasurePerTrain = false,
                 basePctChanceOfTrain = 0.15,
+                maxNumberOfItemsPerTrain = 5,
                 trainCreateDelay = 10000  //Base Game Setting
             };
 

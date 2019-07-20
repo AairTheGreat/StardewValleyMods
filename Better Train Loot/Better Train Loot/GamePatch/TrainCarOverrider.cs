@@ -3,6 +3,7 @@ using BetterTrainLoot.Framework;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.BellsAndWhistles;
+using StardewValley.Objects;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,12 +26,16 @@ namespace BetterTrainLoot.GamePatch
         {
             double chance = (trainType != TRAINS.PRESENT_TRAIN) ? BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck : 3.0 * BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck;
 
-            if (Game1.random.NextDouble() <= chance && BetterTrainLootMod.Instance.config.useCustomTrainTreasure)
+            if ((Game1.random.NextDouble() <= chance && BetterTrainLootMod.Instance.config.useCustomTrainTreasure && BetterTrainLootMod.numberOfRewardsPerTrain < BetterTrainLootMod.Instance.config.maxNumberOfItemsPerTrain)
+                || BetterTrainLootMod.Instance.config.enableMaxTreasurePerTrain)
             {                
                 Item reward = GetCustomTrainTreasure(trainType);
 
                 if (reward.ParentSheetIndex != -1)
+                {
                     Game1.createObjectDebris(reward.ParentSheetIndex, (int)globalPosition.X / 64, (int)globalPosition.Y / 64, (int)((double)globalPosition.Y + 320.0), 0, 1f, (GameLocation)null);
+                    BetterTrainLootMod.numberOfRewardsPerTrain++;
+                }
             }
         }
 
@@ -63,9 +68,22 @@ namespace BetterTrainLoot.GamePatch
                 Game1.showGlobalMessage("You found a lost book. The library has been expanded.");
             }
 
-            // Create reward item
             Item reward;
-            reward = (Item) new StardewValley.Object(id, 1);
+            // Create reward item
+            if (id >= 504 && id <= 515)
+            {
+                //This is boot
+                reward = new Boots(id);  //Not sure if this is needed
+            }
+            if (id >= 516 && id <= 534)
+            {
+                //This is ring
+                reward = new Ring(id);  //Not sure if this is needed
+            }
+            else
+            {
+                reward = (Item)new StardewValley.Object(id, 1);
+            }
             
             return reward;
         }             

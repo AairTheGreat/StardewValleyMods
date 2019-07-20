@@ -14,6 +14,8 @@ namespace BetterTrainLoot
     public class BetterTrainLootMod : Mod
     {
         public static BetterTrainLootMod Instance { get; private set; }
+        public static int numberOfRewardsPerTrain = 0;
+
         internal HarmonyInstance harmony { get; private set; }
 
         private int maxNumberOfTrains;
@@ -24,7 +26,7 @@ namespace BetterTrainLoot
 
         private double pctChanceOfNewTrain = 0.0;
 
-        private bool overrideMaxTrains;
+        private bool forceNewTrain;
         private bool enableCreatedTrain = true;
 
         internal ModConfig config;
@@ -56,7 +58,7 @@ namespace BetterTrainLoot
             if (e.Button == SButton.Y)
             {
                 this.Monitor.Log("Player press Y... Choo choo");                
-                overrideMaxTrains = true;
+                forceNewTrain = true;
                 enableCreatedTrain = true;
             }
         }
@@ -68,21 +70,24 @@ namespace BetterTrainLoot
 
         private void GameLoop_TimeChanged(object sender, StardewModdingAPI.Events.TimeChangedEventArgs e)
         {
-            if (railroad != null && Game1.player.currentLocation.IsOutdoors && e.NewTime >= startTimeOfFirstTrain)
+            if (railroad != null)
             {
-                if (enableCreatedTrain && ((railroad.train.Value == null && numberOfTrains < maxNumberOfTrains) || overrideMaxTrains))
+                if (Game1.player.currentLocation.IsOutdoors && railroad.train.Value == null)
                 {
-                    if (Game1.random.NextDouble() <= pctChanceOfNewTrain || (railroad.train.Value == null && overrideMaxTrains))
+                    if (forceNewTrain)
                     {
-                        railroad.setTrainComing(config.trainCreateDelay);
-                        numberOfTrains++;
-                        overrideMaxTrains = false;
-                        trainType = TRAINS.UNKNOWN;
-                        this.Monitor.Log($"Setting train... Choo choo... {Game1.timeOfDay}");
-                        enableCreatedTrain = false;
+                        CreateNewTrain();
+                    }
+                    else if (enableCreatedTrain
+                        && numberOfTrains < maxNumberOfTrains
+                        && e.NewTime >= startTimeOfFirstTrain
+                        && Game1.random.NextDouble() <= pctChanceOfNewTrain)
+                    {
+                        CreateNewTrain();
                     }
                 }
-                else if(railroad.train.Value != null && !enableCreatedTrain)
+
+                if (railroad.train.Value != null && !enableCreatedTrain)
                 {
                     enableCreatedTrain = true;
                     trainType = (TRAINS)railroad.train.Value.type.Value;
@@ -97,11 +102,23 @@ namespace BetterTrainLoot
             UpdateTrainLootChances();            
         }
 
+        private void CreateNewTrain()
+        {
+            numberOfRewardsPerTrain = 0;
+            railroad.setTrainComing(config.trainCreateDelay);
+            numberOfTrains++;
+            forceNewTrain = false;
+            trainType = TRAINS.UNKNOWN;
+            this.Monitor.Log($"Setting train... Choo choo... {Game1.timeOfDay}");
+            enableCreatedTrain = false;
+        }
+
         private void ResetDailyValues()
         {
-            overrideMaxTrains = false;
+            forceNewTrain = false;
             enableCreatedTrain = true;
             numberOfTrains = 0;
+            numberOfRewardsPerTrain = 0;
             pctChanceOfNewTrain = Game1.dailyLuck + config.basePctChanceOfTrain;
         }
 
