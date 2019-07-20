@@ -27,7 +27,7 @@ namespace BetterTrainLoot.GamePatch
             double chance = (trainType != TRAINS.PRESENT_TRAIN) ? BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck : 3.0 * BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck;
 
             if ((Game1.random.NextDouble() <= chance && BetterTrainLootMod.Instance.config.useCustomTrainTreasure && BetterTrainLootMod.numberOfRewardsPerTrain < BetterTrainLootMod.Instance.config.maxNumberOfItemsPerTrain)
-                || BetterTrainLootMod.Instance.config.enableMaxTreasurePerTrain)
+                || BetterTrainLootMod.Instance.config.enableNoLimitTreasurePerTrain)
             {                
                 Item reward = GetCustomTrainTreasure(trainType);
 
@@ -70,20 +70,7 @@ namespace BetterTrainLoot.GamePatch
 
             Item reward;
             // Create reward item
-            if (id >= 504 && id <= 515)
-            {
-                //This is boot
-                reward = new Boots(id);  //Not sure if this is needed
-            }
-            if (id >= 516 && id <= 534)
-            {
-                //This is ring
-                reward = new Ring(id);  //Not sure if this is needed
-            }
-            else
-            {
-                reward = (Item)new StardewValley.Object(id, 1);
-            }
+            reward = (Item)new StardewValley.Object(id, 1); // Note: if any boots or rings are in the treasure list, they will not be equipable
             
             return reward;
         }             
