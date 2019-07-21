@@ -1,6 +1,6 @@
 [Better Train Loot](https://github.com/AairTheGreat/StardewValleyMods/tree/master/Better%20Train%20Loot) is a [Stardew Valley](http://stardewvalley.net/) mod which changes the way the town's train loot cans work.
                                                                                                            
-**This documentation is for modders and player. See the [Nexus page](https://www.nexusmods.com/stardewvalley/mods/4171) if you want the compiled mod.**
+**This documentation is for modders and players. See the [Nexus page](https://www.nexusmods.com/stardewvalley/mods/4234) if you want the compiled mod.**
                                                                                                            
 ## Contents
 * [Install](#install)
@@ -14,6 +14,7 @@
     - [basePctChanceOfTrain](#basePctChanceOfTrain)    
     - [trainCreateDelay](#trainCreateDelay)
     - [maxNumberOfItemsPerTrain](#maxNumberOfItemsPerTrain)
+	- [enableForceCreateTrain](#enableForceCreateTrain)
   * [Overview of Trains json File](#overview-of-Trains-json-file)
     - [Train Data](#train-data)
     - [Treasure List Data](#Treasure-List)  
@@ -27,7 +28,7 @@
 
 ## Install
 1. If needed, [Install the latest version of SMAPI](https://smapi.io/).
-2. Install [this mod from Nexus mods](https://www.nexusmods.com/stardewvalley/mods/4171).
+2. Install [this mod from Nexus mods](https://www.nexusmods.com/stardewvalley/mods/4234).
 3. Run the game using SMAPI.
 
 ## Introduction
@@ -45,6 +46,7 @@ Better Train Loot allows you to:
     - Present Train
 * Each day now can have up multiple trains per day. (Up to 5 trains)
 * A certain train type has a very small chance of dropping a [Stardrop](https://stardewvalleywiki.com/Stardrop)
+* Present Trains can have up to 3 times more items and has more chance of dropping items.
 * Various configurable settings
 
 ## Configuration Setting
@@ -75,6 +77,10 @@ How many milliseconds from when the message about a train is going thru Stardew 
 #### maxNumberOfItemsPerTrain
 Limits the amount of items per train that the mod will create.  Note: You can still get more than the maximum since the game can still create items.    
 - Default Value: 5 
+#### enableForceCreateTrain
+If value is true, allows the user to force a train to be created by pressing the button Y.  
+Note: The train will be created on next game time update if there is no current train.
+- Default Value: false 
 
 ### Overview of Trains json File
 Everyone loves items flying off trains!  Therefore, it's time to talk about how the configuration file is put together.  Here is the general workflow:
@@ -165,7 +171,7 @@ It possible that you decided to edit the train config file and now it's not work
 No real need to localize this mod.
 
 ## Notes
-If any boots or rings are in the treasure list, they will be created as a normal item.  This allows you to sell them in the shipping bin but not equip them.
+If any boots or rings are in the treasure list, they will be created as a normal item.  This allows you to sell them in the shipping bin but not wearable.
 
 ## Thank You!
 * [Concerned Ape](https://twitter.com/concernedape) - Creator of Stardew Valley.

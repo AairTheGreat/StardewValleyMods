@@ -25,8 +25,9 @@ namespace BetterTrainLoot.GamePatch
         private static void CheckForTreasure(TRAINS trainType, Vector2 globalPosition)
         {
             double chance = (trainType != TRAINS.PRESENT_TRAIN) ? BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck : 3.0 * BetterTrainLootMod.Instance.config.baseChancePercent + Game1.dailyLuck;
+            int maxNumberOfItems = (trainType != TRAINS.PRESENT_TRAIN) ? BetterTrainLootMod.Instance.config.maxNumberOfItemsPerTrain : 3 * BetterTrainLootMod.Instance.config.maxNumberOfItemsPerTrain;
 
-            if ((Game1.random.NextDouble() <= chance && BetterTrainLootMod.Instance.config.useCustomTrainTreasure && BetterTrainLootMod.numberOfRewardsPerTrain < BetterTrainLootMod.Instance.config.maxNumberOfItemsPerTrain)
+            if ((Game1.random.NextDouble() <= chance && BetterTrainLootMod.Instance.config.useCustomTrainTreasure && BetterTrainLootMod.numberOfRewardsPerTrain < maxNumberOfItems)
                 || BetterTrainLootMod.Instance.config.enableNoLimitTreasurePerTrain)
             {                
                 Item reward = GetCustomTrainTreasure(trainType);

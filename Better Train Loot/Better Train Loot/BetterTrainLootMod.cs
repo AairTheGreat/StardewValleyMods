@@ -26,8 +26,10 @@ namespace BetterTrainLoot
 
         private double pctChanceOfNewTrain = 0.0;
 
+        private bool startupMessage = true;
         private bool forceNewTrain;
         private bool enableCreatedTrain = true;
+        private bool railroadMapBlocked;
 
         internal ModConfig config;
         internal Dictionary<TRAINS, TrainData> trainCars;
@@ -50,27 +52,31 @@ namespace BetterTrainLoot
 
                 string trainCarFile = Path.Combine("DataFiles", "trains.json");
                 trainCars = helper.Data.ReadJsonFile<Dictionary<TRAINS, TrainData>>(trainCarFile) ?? TrainDefaultConfig.CreateTrainCarData(trainCarFile);
-
             }
         }
         private void Input_ButtonReleased(object sender, StardewModdingAPI.Events.ButtonReleasedEventArgs e)
         {
-            if (e.Button == SButton.Y)
+            if (e.Button == SButton.Y && !railroadMapBlocked 
+                && config.enableForceCreateTrain && config.enableMod)
             {
                 this.Monitor.Log("Player press Y... Choo choo");                
                 forceNewTrain = true;
                 enableCreatedTrain = true;
             }
+            else if (e.Button == SButton.Y && railroadMapBlocked)
+            {
+                this.Monitor.Log("Player press Y, but the railraod map is not available... No choo choo for you.");
+            }
         }
 
         private void GameLoop_SaveLoaded(object sender, StardewModdingAPI.Events.SaveLoadedEventArgs e)
         {
-            railroad = (Game1.getLocationFromName("Railroad") as Railroad);
+            railroad = (Game1.getLocationFromName("Railroad") as Railroad);            
         }
 
         private void GameLoop_TimeChanged(object sender, StardewModdingAPI.Events.TimeChangedEventArgs e)
         {
-            if (railroad != null)
+            if (railroad != null && !railroadMapBlocked && config.enableMod)
             {
                 if (Game1.player.currentLocation.IsOutdoors && railroad.train.Value == null)
                 {
@@ -97,9 +103,59 @@ namespace BetterTrainLoot
 
         private void GameLoop_DayStarted(object sender, StardewModdingAPI.Events.DayStartedEventArgs e)
         {
-            ResetDailyValues();
-            SetMaxNumberOfTrainsAndStartTime();
-            UpdateTrainLootChances();            
+            if (EnableModIfMainPlayer())
+            {
+                if (CheckForMapAccess())
+                {
+                    ResetDailyValues();
+                    SetMaxNumberOfTrainsAndStartTime();
+                    UpdateTrainLootChances();
+                }
+            }
+        }
+
+        private bool EnableModIfMainPlayer()
+        {
+            if (Context.IsMainPlayer)
+            {
+                if (!config.enableMod)
+                {
+                    config.enableMod = true;
+                    startupMessage = true;
+                }
+            }
+            else
+            {
+                config.enableMod = false;
+            }
+
+            SetStartupMessage(config.enableMod);
+
+            return config.enableMod;
+        }
+
+        private void SetStartupMessage(bool isEnabled)
+        {
+            if (startupMessage && isEnabled)
+            {
+                this.Monitor.Log("Single player or Host:  Mod Enabled.");
+            }
+            else if (startupMessage && !isEnabled)
+            {
+                this.Monitor.Log("Farmhand player: Mod Disabled.");
+            }
+            startupMessage = false;
+        }
+
+        private bool CheckForMapAccess()
+        {
+            railroadMapBlocked = (Game1.stats.DaysPlayed < 31U);
+            if (railroadMapBlocked)
+            {
+                Monitor.Log("Railroad map blocked.  No trains can be created, yet.");
+            }
+
+            return !railroadMapBlocked;
         }
 
         private void CreateNewTrain()

@@ -36,3 +36,7 @@ How many milliseconds from when the message about a train is going thru Stardew 
 Limits the amount of items per train that the mod will create.  Note: You can still get more than the maximum since the game can still create items.    
 - Default Value: 5 
  
+#### enableForceCreateTrain
+If value is true, allows the user to force a train to be created by pressing the button Y.  
+Note: The train will be created on next game time update if there is no current train.
+- Default Value: false 

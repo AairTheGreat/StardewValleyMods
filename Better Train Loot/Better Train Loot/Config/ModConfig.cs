@@ -8,7 +8,7 @@
         public double baseChancePercent { get; set; }
         public double basePctChanceOfTrain { get; set; }
         public int trainCreateDelay { get; set; }
-
         public int maxNumberOfItemsPerTrain { get; set; }
+        public bool enableForceCreateTrain { get; set; }
     }
 }

@@ -12,7 +12,8 @@
                 enableNoLimitTreasurePerTrain = false,
                 basePctChanceOfTrain = 0.15,
                 maxNumberOfItemsPerTrain = 5,
-                trainCreateDelay = 10000  //Base Game Setting
+                trainCreateDelay = 10000,  //Base Game Setting
+                enableForceCreateTrain = false
             };
 
             BetterTrainLootMod.Instance.Helper.Data.WriteJsonFile(file, config);
