@@ -10,5 +10,6 @@
         public int trainCreateDelay { get; set; }
         public int maxNumberOfItemsPerTrain { get; set; }
         public bool enableForceCreateTrain { get; set; }
+        public bool enableMultiplayerChatMessage { get; set; }
     }
 }

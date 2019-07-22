@@ -15,6 +15,7 @@
     - [trainCreateDelay](#trainCreateDelay)
     - [maxNumberOfItemsPerTrain](#maxNumberOfItemsPerTrain)
 	- [enableForceCreateTrain](#enableForceCreateTrain)
+	- [enableMultiplayerChatMessage](#enableMultiplayerChatMessage)
   * [Overview of Trains json File](#overview-of-Trains-json-file)
     - [Train Data](#train-data)
     - [Treasure List Data](#Treasure-List)  
@@ -23,6 +24,7 @@
   * [Bad Edits to Trains json File](#Bad-Edits-to-Trains-json-file)
 * [Localization](#localization)
 * [Notes](#notes)
+* [Multiplayer Notes](#multiplayer-notes)
 * [Thank You!](#thank-you)
 * [See Also](#see-also)
 
@@ -81,6 +83,10 @@ Limits the amount of items per train that the mod will create.  Note: You can st
 If value is true, allows the user to force a train to be created by pressing the button Y.  
 Note: The train will be created on next game time update if there is no current train.
 - Default Value: false 
+#### enableMultiplayerChatMessage
+If value is true, a chat message will appear to the farmhands letting them know a train is coming.  
+Note: This message is currently only in English.
+- Default Value: true 
 
 ### Overview of Trains json File
 Everyone loves items flying off trains!  Therefore, it's time to talk about how the configuration file is put together.  Here is the general workflow:
@@ -168,10 +174,16 @@ It possible that you decided to edit the train config file and now it's not work
 3. Start Stardew Valley the default json file will be recreated.
  
 ## Localization
-No real need to localize this mod.
+There is a chat message that is created when a train is created.  This should be localized eventually.
 
 ## Notes
 If any boots or rings are in the treasure list, they will be created as a normal item.  This allows you to sell them in the shipping bin but not wearable.
+
+## Multiplayer Notes
+Here are a couple things:
+1. It appears Stardew Valley does not send a message to farmhand players.  If this mod creates a train a chat message is sent out.
+2. Farmhand trains are lagging.  I think this a base game issue, but it could be mod related.  I'm still looking into this.
+
 
 ## Thank You!
 * [Concerned Ape](https://twitter.com/concernedape) - Creator of Stardew Valley.

@@ -6,8 +6,10 @@ using StardewModdingAPI;
 using StardewValley;
 using StardewValley.BellsAndWhistles;
 using StardewValley.Locations;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace BetterTrainLoot
 {
@@ -15,6 +17,8 @@ namespace BetterTrainLoot
     {
         public static BetterTrainLootMod Instance { get; private set; }
         public static int numberOfRewardsPerTrain = 0;
+
+        internal static Multiplayer multiplayer;
 
         internal HarmonyInstance harmony { get; private set; }
 
@@ -30,11 +34,14 @@ namespace BetterTrainLoot
         private bool forceNewTrain;
         private bool enableCreatedTrain = true;
         private bool railroadMapBlocked;
+        private bool isMainPlayer;
 
         internal ModConfig config;
         internal Dictionary<TRAINS, TrainData> trainCars;
 
         private Railroad railroad;
+
+
         public override void Entry(IModHelper helper)
         {
             Instance = this;
@@ -52,12 +59,14 @@ namespace BetterTrainLoot
 
                 string trainCarFile = Path.Combine("DataFiles", "trains.json");
                 trainCars = helper.Data.ReadJsonFile<Dictionary<TRAINS, TrainData>>(trainCarFile) ?? TrainDefaultConfig.CreateTrainCarData(trainCarFile);
+
+                SetupMultiplayerObject();
             }
         }
         private void Input_ButtonReleased(object sender, StardewModdingAPI.Events.ButtonReleasedEventArgs e)
         {
             if (e.Button == SButton.Y && !railroadMapBlocked 
-                && config.enableForceCreateTrain && config.enableMod)
+                && config.enableForceCreateTrain && isMainPlayer)
             {
                 this.Monitor.Log("Player press Y... Choo choo");                
                 forceNewTrain = true;
@@ -71,12 +80,13 @@ namespace BetterTrainLoot
 
         private void GameLoop_SaveLoaded(object sender, StardewModdingAPI.Events.SaveLoadedEventArgs e)
         {
-            railroad = (Game1.getLocationFromName("Railroad") as Railroad);            
+            railroad = (Game1.getLocationFromName("Railroad") as Railroad);
+            startupMessage = true;
         }
 
         private void GameLoop_TimeChanged(object sender, StardewModdingAPI.Events.TimeChangedEventArgs e)
         {
-            if (railroad != null && !railroadMapBlocked && config.enableMod)
+            if (railroad != null && !railroadMapBlocked && isMainPlayer)
             {
                 if (Game1.player.currentLocation.IsOutdoors && railroad.train.Value == null)
                 {
@@ -103,46 +113,46 @@ namespace BetterTrainLoot
 
         private void GameLoop_DayStarted(object sender, StardewModdingAPI.Events.DayStartedEventArgs e)
         {
-            if (EnableModIfMainPlayer())
+            if (CheckForMapAccess())
             {
-                if (CheckForMapAccess())
+                if (IsMainPlayer())
                 {
                     ResetDailyValues();
                     SetMaxNumberOfTrainsAndStartTime();
-                    UpdateTrainLootChances();
                 }
-            }
+                UpdateTrainLootChances();
+            }            
         }
 
-        private bool EnableModIfMainPlayer()
+        private bool IsMainPlayer()
         {
             if (Context.IsMainPlayer)
             {
-                if (!config.enableMod)
+                if (!isMainPlayer)
                 {
-                    config.enableMod = true;
+                    isMainPlayer = true;
                     startupMessage = true;
                 }
             }
             else
             {
-                config.enableMod = false;
+                isMainPlayer = false;
             }
 
-            SetStartupMessage(config.enableMod);
+            SetStartupMessage();
 
-            return config.enableMod;
+            return isMainPlayer;
         }
 
-        private void SetStartupMessage(bool isEnabled)
+        private void SetStartupMessage()
         {
-            if (startupMessage && isEnabled)
+            if (startupMessage && isMainPlayer)
             {
                 this.Monitor.Log("Single player or Host:  Mod Enabled.");
             }
-            else if (startupMessage && !isEnabled)
+            else if (startupMessage && !isMainPlayer)
             {
-                this.Monitor.Log("Farmhand player: Mod Disabled.");
+                this.Monitor.Log("Farmhand player: (Mostly) Mod Disabled.");
             }
             startupMessage = false;
         }
@@ -165,8 +175,9 @@ namespace BetterTrainLoot
             numberOfTrains++;
             forceNewTrain = false;
             trainType = TRAINS.UNKNOWN;
-            this.Monitor.Log($"Setting train... Choo choo... {Game1.timeOfDay}");
+            //this.Monitor.Log($"Setting train... Choo choo... {Game1.timeOfDay}");
             enableCreatedTrain = false;
+            SendMulitplayerMessage("A train is approaching Stardew Valley...");
         }
 
         private void ResetDailyValues()
@@ -214,6 +225,21 @@ namespace BetterTrainLoot
             foreach (TrainData train in trainCars.Values)
             {
                 train.UpdateTrainLootChances(Game1.dailyLuck);
+            }
+        }
+
+        private void SetupMultiplayerObject()
+        {
+            Type type = typeof(Game1);
+            FieldInfo info = type.GetField("multiplayer", BindingFlags.NonPublic | BindingFlags.Static);
+            multiplayer = info.GetValue(null) as Multiplayer;
+        }
+
+        internal static void SendMulitplayerMessage(string message)
+        {
+            if (multiplayer != null && BetterTrainLootMod.Instance.config.enableMultiplayerChatMessage)
+            {
+                multiplayer.sendChatMessage(LocalizedContentManager.LanguageCode.en, message);
             }
         }
     }
