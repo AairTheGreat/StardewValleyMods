@@ -40,3 +40,8 @@ Limits the amount of items per train that the mod will create.  Note: You can st
 If value is true, allows the user to force a train to be created by pressing the button Y.  
 Note: The train will be created on next game time update if there is no current train.
 - Default Value: false 
+
+#### enableMultiplayerChatMessage
+If value is true, a chat message will appear to the farmhands letting them know a train is coming.  
+Note: This message is currently only in English.
+- Default Value: true 
