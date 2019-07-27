@@ -187,12 +187,12 @@ namespace BetterTrainLoot
             enableCreatedTrain = true;
             numberOfTrains = 0;
             numberOfRewardsPerTrain = 0;
-            pctChanceOfNewTrain = Game1.dailyLuck + config.basePctChanceOfTrain;
+            pctChanceOfNewTrain = Game1.dailyLuck + config.basePctChanceOfTrain;                                                                                    // SDV 1.4... use Game1.player.DailyLuck
         }
 
         private void SetMaxNumberOfTrainsAndStartTime()
         {
-            maxNumberOfTrains = (int)Math.Round((Game1.random.NextDouble() + Game1.dailyLuck) * (double)config.maxTrainsPerDay, 0, MidpointRounding.AwayFromZero);
+            maxNumberOfTrains = (int)Math.Round((Game1.random.NextDouble() + Game1.dailyLuck) * (double)config.maxTrainsPerDay, 0, MidpointRounding.AwayFromZero);  // SDV 1.4... use Game1.player.DailyLuck
 
             double ratio = (double)maxNumberOfTrains / (double)config.maxTrainsPerDay;  
 
@@ -206,7 +206,7 @@ namespace BetterTrainLoot
             //Update the treasure chances for today
             foreach (TrainData train in trainCars.Values)
             {
-                train.UpdateTrainLootChances(Game1.dailyLuck);
+                train.UpdateTrainLootChances(Game1.dailyLuck);                                                                                                      // SDV 1.4... use Game1.player.DailyLuck
             }
         }
 
