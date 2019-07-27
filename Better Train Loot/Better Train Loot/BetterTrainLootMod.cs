@@ -46,6 +46,7 @@ namespace BetterTrainLoot
         {
             Instance = this;
             config = helper.Data.ReadJsonFile<ModConfig>("config.json") ?? ModConfigDefaultConfig.CreateDefaultConfig("config.json");
+            config = ModConfigDefaultConfig.UpdateConfigToLatest(config, "config.json");
 
             if (config.enableMod)
             {
@@ -190,32 +191,13 @@ namespace BetterTrainLoot
         }
 
         private void SetMaxNumberOfTrainsAndStartTime()
-        {            
-            switch (Game1.random.Next(0, 10))
-            {
-                case 0:
-                    maxNumberOfTrains = 0;
-                    startTimeOfFirstTrain = 2600;
-                    break;
-                case 1:
-                case 2:
-                case 3:
-                    maxNumberOfTrains = 1;
-                    startTimeOfFirstTrain = 1000;
-                    break;
-                case 4:
-                case 5:
-                case 6:
-                    maxNumberOfTrains = 3;
-                    startTimeOfFirstTrain = 800;
-                    break;
-                case 7:
-                case 8:
-                case 9:
-                    maxNumberOfTrains = 5;
-                    startTimeOfFirstTrain = 600;
-                    break;
-            }
+        {
+            maxNumberOfTrains = (int)Math.Round((Game1.random.NextDouble() + Game1.dailyLuck) * (double)config.maxTrainsPerDay, 0, MidpointRounding.AwayFromZero);
+
+            double ratio = (double)maxNumberOfTrains / (double)config.maxTrainsPerDay;  
+
+            startTimeOfFirstTrain = 1200 - (int)(ratio * 500);
+            
             Monitor.Log($"Setting Max Trains to {maxNumberOfTrains}");
         }
 
