@@ -66,10 +66,10 @@ namespace BetterTrainLoot
         }
         private void Input_ButtonReleased(object sender, StardewModdingAPI.Events.ButtonReleasedEventArgs e)
         {
-            if (e.Button == SButton.P && !railroadMapBlocked 
+            if (e.Button == SButton.O && !railroadMapBlocked 
                 && config.enableForceCreateTrain && isMainPlayer)
             {
-                this.Monitor.Log("Player press P... Choo choo");                
+                this.Monitor.Log("Player press O... Choo choo");                
                 forceNewTrain = true;
                 enableCreatedTrain = true;
             }
