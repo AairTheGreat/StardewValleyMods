@@ -49,7 +49,7 @@ namespace BetterGarbageCans.GamePatch
         private static void CheckForTreasure(int index, ref Farmer player)
         {
             Random random = new Random((int)Game1.uniqueIDForThisGame / 2 + (int)Game1.stats.DaysPlayed + 777 + index + Game1.timeOfDay);
-            if (random.NextDouble() < BetterGarbageCansMod.Instance.config.baseChancePercent + Game1.dailyLuck)  //Game1.player.DailyLuck  // -- Use for SDV 1.4 WHEN it comes out.
+            if (random.NextDouble() < BetterGarbageCansMod.Instance.config.baseChancePercent + Game1.player.DailyLuck)  // -- Use for SDV 1.4 WHEN it comes out.
             {
                 Item reward = GetTreasure(index, random);
 
@@ -185,11 +185,11 @@ namespace BetterGarbageCans.GamePatch
             // Create reward item
             Item reward;
 
-            if (id >= 516 && id <= 534)
+            if ((id >= 516 && id <= 534) || id == 810 || id == 811)
             {
                 reward = new Ring(id);
             }
-            else if (id >= 504 && id <= 515)
+            else if ((id >= 504 && id <= 515) || id == 804 || id == 806)
             {
                 reward = new Boots(id);
             }
@@ -238,25 +238,32 @@ namespace BetterGarbageCans.GamePatch
                     break;
             }
 
-            if (index == 3 && random.NextDouble() < 0.2 + Game1.dailyLuck)  //Game1.player.DailyLuck                                // -- Use for SDV 1.4 WHEN it comes out.
+            if (index == 3 && random.NextDouble() < 0.2 + Game1.player.DailyLuck)  
             {
                 parentSheetIndex = 535;
                 if (random.NextDouble() < 0.05)
                     parentSheetIndex = 749;
             }
 
-            if (index == 4 && random.NextDouble() < 0.2 + Game1.dailyLuck)  //Game1.player.DailyLuck                                // -- Use for SDV 1.4 WHEN it comes out.
+            if (index == 4 && random.NextDouble() < 0.2 + Game1.player.DailyLuck)  
             {
                 parentSheetIndex = 378 + random.Next(3) * 2;
                 random.Next(1, 5);
             }
 
-            if (index == 5 && random.NextDouble() < 0.2 + Game1.dailyLuck && Game1.dishOfTheDay != null)  //Game1.player.DailyLuck  // -- Use for SDV 1.4 WHEN it comes out.
+            if (index == 5 && random.NextDouble() < 0.2 + Game1.player.DailyLuck && Game1.dishOfTheDay != null)  
                 parentSheetIndex = Game1.dishOfTheDay.ParentSheetIndex != 217 ? Game1.dishOfTheDay.ParentSheetIndex : 216;
 
-            if (index == 6 && random.NextDouble() < 0.2 + Game1.dailyLuck)  //Game1.player.DailyLuck                                // -- Use for SDV 1.4 WHEN it comes out.
+            if (index == 6 && random.NextDouble() < 0.2 +  Game1.player.DailyLuck)  
                 parentSheetIndex = 223;
-            
+            if (index == 7 && random.NextDouble() < 0.2)
+            {
+                if (!Utility.HasAnyPlayerSeenEvent(191393))
+                    parentSheetIndex = 167;
+                if (Utility.doesMasterPlayerHaveMailReceivedButNotMailForTomorrow("ccMovieTheater") 
+                    && !Utility.doesMasterPlayerHaveMailReceivedButNotMailForTomorrow("ccMovieTheaterJoja"))
+                    parentSheetIndex = random.NextDouble() >= 0.25 ? 270 : 809;
+            }
             return (Item)new StardewValley.Object(parentSheetIndex, 1);
         }
 
