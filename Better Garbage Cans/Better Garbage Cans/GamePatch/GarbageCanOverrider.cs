@@ -5,6 +5,7 @@ using StardewValley;
 using StardewValley.Characters;
 using StardewValley.Locations;
 using StardewValley.Menus;
+using StardewValley.Network;
 using StardewValley.Objects;
 using System;
 using System.Collections.Generic;
@@ -30,34 +31,111 @@ namespace BetterGarbageCans.GamePatch
                     
                     if (index >= 0 && index < ___garbageChecked.Count)
                     {
+                        
                         if (CanCheckGarbageCan((GARBAGE_CANS)index))
-                        {                            
+                        {
+                            Game1.stats.incrementStat("trashCansChecked", 1);
                             BetterGarbageCansMod.Instance.garbageCans[(GARBAGE_CANS)index].LastTimeChecked = Game1.timeOfDay;
-                            //BetterGarbageCansMod.Instance.Monitor.Log($"Checked {(GARBAGE_CANS)index} - Game time of day: {Game1.timeOfDay}");
-
                             ___garbageChecked[index] = true;
-                            __instance.playSound("trashcan");
-
+                            CreateSoundAndSparks(__instance, tileLocation, index);
                             CheckForNPCMessages(__instance, tileLocation, ref who);
-                            CheckForTreasure(index, ref who);
+                            CheckForTreasure(__instance, tileLocation, index, ref who);
                         }
                     }
                 }
             }
         }
 
-        private static void CheckForTreasure(int index, ref Farmer player)
+        private static void CreateSoundAndSparks(GameLocation location, Location tileLocation, int index)
+        {
+            Random random = new Random((int)Game1.uniqueIDForThisGame / 2 + (int)Game1.stats.DaysPlayed + 777 + index * 77);
+            bool flag1 = Game1.stats.getStat("trashCansChecked") > 20U && random.NextDouble() < 0.01;
+            bool flag2 = Game1.stats.getStat("trashCansChecked") > 20U && random.NextDouble() < 0.002;
+            int num4 = Utility.getSeasonNumber(Game1.currentSeason) * 17;
+            if (flag2)
+                location.playSound("explosion", NetAudio.SoundContext.Default);
+            else if (flag1)
+                location.playSound("crit", NetAudio.SoundContext.Default);
+            List<TemporaryAnimatedSprite> temporaryAnimatedSpriteList = new List<TemporaryAnimatedSprite>();
+            temporaryAnimatedSpriteList.Add(new TemporaryAnimatedSprite("LooseSprites\\Cursors2", 
+                new Microsoft.Xna.Framework.Rectangle(22 + num4, 0, 16, 10), 
+                new Vector2((float)tileLocation.X, (float)tileLocation.Y) * 64f 
+                + new Vector2(0.0f, -6f) * 4f, false, 0.0f, Color.White)
+            {
+                interval = flag2 ? 4000f : 1000f,
+                motion = flag2 ? new Vector2(4f, -20f) 
+                : new Vector2(0.0f, (float)((flag1 ? -7.0 
+                : (double)(Game1.random.Next(-1, 3) + (Game1.random.NextDouble() < 0.1 ? -2 : 0))) - 8.0)),
+                rotationChange = flag2 ? 0.4f : 0.0f,
+                acceleration = new Vector2(0.0f, 0.7f),
+                yStopCoordinate = tileLocation.Y * 64 - 24,
+                layerDepth = flag2 ? 1f : (float)((tileLocation.Y + 1) * 64 + 2) / 10000f,
+                scale = 4f,
+                Parent = location,
+                shakeIntensity = flag2 ? 0.0f : 1f,
+                reachedStopCoordinate = (TemporaryAnimatedSprite.endBehavior)(x =>
+                {
+                    location.removeTemporarySpritesWithID(97654);
+                    location.playSound("thudStep", NetAudio.SoundContext.Default);
+                    for (int index2 = 0; index2 < 3; ++index2)
+                        location.temporarySprites.Add(new TemporaryAnimatedSprite("LooseSprites\\Cursors", new Microsoft.Xna.Framework.Rectangle(372, 1956, 10, 10), new Vector2((float)tileLocation.X, (float)tileLocation.Y) * 64f + new Vector2((float)(index2 * 6), (float)(Game1.random.Next(3) - 3)) * 4f, false, 0.02f, Color.DimGray)
+                        {
+                            alpha = 0.85f,
+                            motion = new Vector2((float)((double)index2 * 0.300000011920929 - 0.600000023841858), -1f),
+                            acceleration = new Vector2(1f / 500f, 0.0f),
+                            interval = 99999f,
+                            layerDepth = (float)((tileLocation.Y + 1) * 64 + 3) / 10000f,
+                            scale = 3f,
+                            scaleChange = 0.02f,
+                            rotationChange = (float)((double)Game1.random.Next(-5, 6) * 3.14159274101257 / 256.0),
+                            delayBeforeAnimationStart = 50
+                        });
+                }),
+                id = 97654f
+            });
+            if (flag2)
+                temporaryAnimatedSpriteList.Last<TemporaryAnimatedSprite>().reachedStopCoordinate = new TemporaryAnimatedSprite.endBehavior(temporaryAnimatedSpriteList.Last<TemporaryAnimatedSprite>().bounce);
+            temporaryAnimatedSpriteList.Add(new TemporaryAnimatedSprite("LooseSprites\\Cursors2", 
+                new Microsoft.Xna.Framework.Rectangle(22 + num4, 11, 16, 16), 
+                new Vector2((float)tileLocation.X, (float)tileLocation.Y) * 64f 
+                + new Vector2(0.0f, -5f) * 4f, false, 0.0f, Color.White)
+            {
+                interval = flag2 ? 999999f : 1000f,
+                layerDepth = (float)((tileLocation.Y + 1) * 64 + 1) / 10000f,
+                scale = 4f,
+                id = 97654f
+            });
+            for (int index2 = 0; index2 < 5; ++index2)
+                temporaryAnimatedSpriteList.Add(new TemporaryAnimatedSprite("LooseSprites\\Cursors2", 
+                    new Microsoft.Xna.Framework.Rectangle(22 + Game1.random.Next(4) * 4, 32, 4, 4), 
+                    new Vector2((float)tileLocation.X, (float)tileLocation.Y) * 64f 
+                    + new Vector2((float)Game1.random.Next(13), (float)(Game1.random.Next(3) - 3)) * 4f, false, 0.0f, Color.White)
+                {
+                    interval = 500f,
+                    motion = new Vector2((float)Game1.random.Next(-2, 3), -5f),
+                    acceleration = new Vector2(0.0f, 0.4f),
+                    layerDepth = (float)((tileLocation.Y + 1) * 64 + 3) / 10000f,
+                    scale = 4f,
+                    color = Utility.getRandomRainbowColor((Random)null),
+                    delayBeforeAnimationStart = Game1.random.Next(100)
+                });
+            BetterGarbageCansMod.multiplayer.broadcastSprites(location, temporaryAnimatedSpriteList);
+            location.playSound("trashcan", NetAudio.SoundContext.Default);            
+        }
+
+        private static void CheckForTreasure(GameLocation location, Location tileLocation, int index, ref Farmer player)
         {
             Random random = new Random((int)Game1.uniqueIDForThisGame / 2 + (int)Game1.stats.DaysPlayed + 777 + index + Game1.timeOfDay);
-            if (random.NextDouble() < BetterGarbageCansMod.Instance.config.baseChancePercent + Game1.player.DailyLuck)  // -- Use for SDV 1.4 WHEN it comes out.
+            if (random.NextDouble() < BetterGarbageCansMod.Instance.config.baseChancePercent + Game1.player.DailyLuck)  
             {
                 Item reward = GetTreasure(index, random);
 
                 if (reward != null)
                 {
-                    player.addItemByMenuIfNecessary(reward, (ItemGrabMenu.behaviorOnItemSelect)null);
+                    Vector2 origin = new Vector2((float)tileLocation.X + 0.5f, (float)(tileLocation.Y - 1)) * 64f;
+
+                    Game1.createItemDebris(reward, origin, 2, location, (int)origin.Y + 64);
                     BetterGarbageCansMod.Instance.garbageCans[(GARBAGE_CANS)index].LastTimeFoundItem = Game1.timeOfDay;
-                    //BetterGarbageCansMod.Instance.Monitor.Log($"Got treasure from {(GARBAGE_CANS)index} - Game time of day: {Game1.timeOfDay}");
                 }
             }
         }
