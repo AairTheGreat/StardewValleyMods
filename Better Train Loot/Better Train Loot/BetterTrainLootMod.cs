@@ -57,7 +57,7 @@ namespace BetterTrainLoot
 
                 harmony = HarmonyInstance.Create("com.aairthegreat.mod.trainloot");
                 harmony.Patch(typeof(TrainCar).GetMethod("draw"), null, new HarmonyMethod(typeof(TrainCarOverrider).GetMethod("postfix_getTrainTreasure")));
-
+                harmony.Patch(typeof(Railroad).GetMethod("PlayTrainApproach"), new HarmonyMethod(typeof(RailroadOverrider).GetMethod("prefix_playTrainApproach")));
                 string trainCarFile = Path.Combine("DataFiles", "trains.json");
                 trainCars = helper.Data.ReadJsonFile<Dictionary<TRAINS, TrainData>>(trainCarFile) ?? TrainDefaultConfig.CreateTrainCarData(trainCarFile);
 
