@@ -11,7 +11,7 @@
                 baseChancePercent = 0.20, // Base chance of getting an item   
                 useCustomTrainTreasure = true,
                 enableNoLimitTreasurePerTrain = false,
-                showTrainingIsComingMessage = true,
+                showTrainIsComingMessage = true,
                 enableTrainWhistle = true,
                 basePctChanceOfTrain = 0.15,
                 maxNumberOfItemsPerTrain = 5,
@@ -39,7 +39,7 @@
 
                 if (oldConfig.configVersion < 3)
                 {
-                    returnUpdatedConfig.showTrainingIsComingMessage = true;  // Version 3 config addition
+                    returnUpdatedConfig.showTrainIsComingMessage = true;  // Version 3 config addition
                     returnUpdatedConfig.enableTrainWhistle = true;           // Version 3 config addition
                 }
 

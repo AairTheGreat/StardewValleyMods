@@ -11,13 +11,13 @@ namespace BetterTrainLoot.GamePatch
     {
         public static bool prefix_playTrainApproach()
         {
-            if (BetterTrainLootMod.Instance.config.showTrainingIsComingMessage ||
+            if (BetterTrainLootMod.Instance.config.showTrainIsComingMessage ||
                 BetterTrainLootMod.Instance.config.enableTrainWhistle)
             {
                 if (!Game1.currentLocation.isOutdoors || Game1.isFestival())
                     return false;
 
-                if (BetterTrainLootMod.Instance.config.showTrainingIsComingMessage)
+                if (BetterTrainLootMod.Instance.config.showTrainIsComingMessage)
                 {
                     Game1.showGlobalMessage(Game1.content.LoadString("Strings\\Locations:Railroad_TrainComing"));
                 }

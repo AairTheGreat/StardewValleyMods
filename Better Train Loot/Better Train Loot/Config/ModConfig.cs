@@ -5,7 +5,7 @@
         public bool enableMod { get; set; }
         public bool useCustomTrainTreasure { get; set; }
         public bool enableNoLimitTreasurePerTrain { get; set; }
-        public bool showTrainingIsComingMessage { get; set; }
+        public bool showTrainIsComingMessage { get; set; }
         public bool enableTrainWhistle { get; set; }
         public double baseChancePercent { get; set; }
         public double basePctChanceOfTrain { get; set; }
