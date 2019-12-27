@@ -68,6 +68,7 @@ Currently this mod does support localization but currently it only has english.
 * [Pathoschild](https://smapi.io/) - Creator of the Stardew Modding API.
 * [Stardew Wiki](https://stardewvalleywiki.com) - To the people maintaining this very useful site.
 * [Teh's Fishing Overhaul](https://www.nexusmods.com/stardewvalley/mods/866) - TehPers, helped inspire the HUD used in this mod
+* Nexus user Nogohoho - For suggesting this mod idea.
 * To my testers: SparkyTheCat and My Better Half  -- Thank you!
 
 ## See Also
