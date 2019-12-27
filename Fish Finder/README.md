@@ -61,7 +61,7 @@ It possible that you decided to edit the config file and now it's not working as
  
 ## Localization
 
-Currently this mod does not support localization but it is planned to support it in the future.  If you want to help with this effort, let me know.
+Currently this mod does support localization but currently it only has english. 
 
 ## Thank You!
 * [Concerned Ape](https://twitter.com/concernedape) - Creator of Stardew Valley.

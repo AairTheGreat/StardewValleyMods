@@ -6,6 +6,8 @@ using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Tools;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FishFinder
 {
@@ -13,6 +15,8 @@ namespace FishFinder
     {
         public static FishFinderMod Instance { get; private set; }
         internal ModConfig config;
+
+        private Dictionary<string, string> translations;
 
         public override void Entry(IModHelper helper)
         {
@@ -28,6 +32,28 @@ namespace FishFinder
             {
                 config = ModConfigDefaultConfig.UpdateConfigToLatest(config, "config.json") ?? ModConfigDefaultConfig.CreateDefaultConfig("config.json");
             }
+
+            if (!helper.Translation.GetTranslations().Any())
+                this.Monitor.Log("The translation files in this mod's i18n folder seem to be missing. The mod will still work, but you'll see 'missing translation' messages. Try reinstalling the mod to fix this.", LogLevel.Warn);
+
+            ConfigStaticTranslationStrings();
+        }
+
+        private void ConfigStaticTranslationStrings()
+        {
+            translations = new Dictionary<string, string>();
+            translations.Add("hud.foundFishingSpot", Helper.Translation.Get("hud.foundFishingSpot"));
+            translations.Add("hud.noFishingSpot", Helper.Translation.Get("hud.noFishingSpot"));
+            translations.Add("hud.north", Helper.Translation.Get("hud.north"));
+            translations.Add("hud.northwest", Helper.Translation.Get("hud.northwest"));
+            translations.Add("hud.northeast", Helper.Translation.Get("hud.northeast"));
+            translations.Add("hud.south", Helper.Translation.Get("hud.south"));
+            translations.Add("hud.southwest", Helper.Translation.Get("hud.southwest"));
+            translations.Add("hud.southeast", Helper.Translation.Get("hud.southeast"));
+            translations.Add("hud.west", Helper.Translation.Get("hud.west"));
+            translations.Add("hud.east", Helper.Translation.Get("hud.east"));
+            //translations.Add("hud.direction", Helper.Translation.Get("hud.direction"));
+            //translations.Add("hud.distance", Helper.Translation.Get("hud.distance"));
         }
 
         private void Display_RenderedHud(object sender, RenderedHudEventArgs e)
@@ -56,18 +82,18 @@ namespace FishFinder
 
             if (!splashPoint.Equals(Point.Zero))
             {
-                hudTextLine1 = "Found a fishing spot!";
+                hudTextLine1 = translations["hud.foundFishingSpot"];
                 string fishRelativePostion = GetFishingSpotRelativePostion(splashPoint);
-                long distance = GetDistanceToFishingSpot(splashPoint);
+                long fishSportDistance = GetDistanceToFishingSpot(splashPoint);
                 if (config.showDistance)
                 {
-                    hudTextLine2 = $"In the {fishRelativePostion} direction.";
-                    hudTextLine3 = $"Roughly { distance} tiles away.";
+                    hudTextLine2 = Helper.Translation.Get("hud.direction", new { direction = fishRelativePostion });
+                    hudTextLine3 = Helper.Translation.Get("hud.distance", new { distance = fishSportDistance });
                 }
             }
             else
             {
-                hudTextLine1 = "No fishing spot found!";
+                hudTextLine1 = translations["hud.noFishingSpot"];
             }
 
             batch.DrawStringWithShadow(font, hudTextLine1, boxBottomLeft, textColor, 1.0f);
@@ -95,21 +121,21 @@ namespace FishFinder
         {
             if (fishingSpot.X == Game1.player.getTileX())
             {
-                return (fishingSpot.Y < Game1.player.getTileY()) ? "N" : "S";
+                return (fishingSpot.Y < Game1.player.getTileY()) ? translations["hud.north"] : translations["hud.south"];
             }
 
             if (fishingSpot.Y == Game1.player.getTileY())
             {
-                return (fishingSpot.X < Game1.player.getTileX()) ? "W" : "E";
+                return (fishingSpot.X < Game1.player.getTileX()) ? translations["hud.west"] : translations["hud.east"];
             }
 
             if (fishingSpot.X < Game1.player.getTileX())
             {
-                return (fishingSpot.Y < Game1.player.getTileY()) ? "NW" : "SW";
+                return (fishingSpot.Y < Game1.player.getTileY()) ? translations["hud.northwest"] : translations["hud.southwest"];
             }
             else
             {
-                return (fishingSpot.Y < Game1.player.getTileY()) ? "NE" : "SE";
+                return (fishingSpot.Y < Game1.player.getTileY()) ? translations["hud.northeast"] : translations["hud.southeast"];
             }
         }
 
