@@ -32,7 +32,8 @@ namespace BetterPanning
         private Dictionary<string, MapOreConfig> openWaterTiles = new Dictionary<string, MapOreConfig> (); //List<Point>>();
         internal ModConfig config; 
 
-        internal Dictionary<TREASURE_GROUP, TreasureGroup> treasureGroups;
+        internal Dictionary<TREASURE_GROUP, TreasureGroup> defaultTresureGroups;
+        internal Dictionary<string, Dictionary<TREASURE_GROUP, TreasureGroup>> areaTresureGroups;  //GameLocation.Name : <treasure>
 
         internal HarmonyInstance harmony { get; private set; }
 
@@ -60,7 +61,8 @@ namespace BetterPanning
             if (config.useCustomPanningTreasure)
             {
                 string treasureFile = Path.Combine("DataFiles", "Treasure.json");
-                treasureGroups = this.Helper.Data.ReadJsonFile<Dictionary<TREASURE_GROUP, TreasureGroup>>(treasureFile) ?? TreasureGroupDefaultConfig.CreateTreasureGroup(treasureFile);
+                defaultTresureGroups = this.Helper.Data.ReadJsonFile<Dictionary<TREASURE_GROUP, TreasureGroup>>(treasureFile) ?? TreasureGroupDefaultConfig.CreateTreasureGroup(treasureFile);
+                areaTresureGroups = new Dictionary<string, Dictionary<TREASURE_GROUP, TreasureGroup>>();
 
                 harmony = HarmonyInstance.Create("com.aairthegreat.mod.panning");
                 harmony.Patch(typeof(Pan).GetMethod("getPanItems"), null, new HarmonyMethod(typeof(PanOverrider).GetMethod("postfix_getPanItems")));
@@ -92,6 +94,7 @@ namespace BetterPanning
         {
             openWaterTiles.Clear();
             modCreatedPanningSpot.Clear();
+            areaTresureGroups.Clear();
 
             numberOfPanningSpotsGathered = 0;
             startup = true;
@@ -128,17 +131,17 @@ namespace BetterPanning
                 }
                 else
                 {
-                    treasureGroups[TREASURE_GROUP.Artifacts].SetEnableFlagOnAllTreasures(false);
+                    defaultTresureGroups[TREASURE_GROUP.Artifacts].SetEnableFlagOnAllTreasures(false);
                 }
 
                 if (config.enableGeodeMineralsTreasure)
                 {
                     //Disables geode minerals which are not found yet
-                    treasureGroups[TREASURE_GROUP.GeodeMinerals].CheckGroupTreasuresStatus();                      
+                    defaultTresureGroups[TREASURE_GROUP.GeodeMinerals].CheckGroupTreasuresStatus();                      
                 }
                 else
                 {
-                    treasureGroups[TREASURE_GROUP.GeodeMinerals].SetEnableFlagOnAllTreasures(false);                    
+                    defaultTresureGroups[TREASURE_GROUP.GeodeMinerals].SetEnableFlagOnAllTreasures(false);                    
                 }
 
                 CheckSeeds();  //Initial settings
@@ -260,18 +263,18 @@ namespace BetterPanning
 
                         if (!foundAllArtifacts || (foundAllArtifacts && !config.enableAllArtifactsAfterFoundThemAll))
                         {
-                            treasureGroups[TREASURE_GROUP.Artifacts].CheckGroupTreasuresStatus(); //In case they found new ones the previous day.                                                
+                            defaultTresureGroups[TREASURE_GROUP.Artifacts].CheckGroupTreasuresStatus(); //In case they found new ones the previous day.                                                
                         }
                         else if (config.enableAllArtifactsAfterFoundThemAll)
                         {
-                            treasureGroups[TREASURE_GROUP.Artifacts].SetEnableFlagOnAllTreasures(true);
+                            defaultTresureGroups[TREASURE_GROUP.Artifacts].SetEnableFlagOnAllTreasures(true);
                         }
                     }
                 }
 
                 if (config.enableGeodeMineralsTreasure)
                 {
-                    treasureGroups[TREASURE_GROUP.GeodeMinerals].CheckGroupTreasuresStatus();  //In case they found new ones the previous day.                    
+                    defaultTresureGroups[TREASURE_GROUP.GeodeMinerals].CheckGroupTreasuresStatus();  //In case they found new ones the previous day.                    
                 }
 
                 if (Game1.dayOfMonth == 1)  //Should mean it's in new season, different seeds should now be available.
@@ -381,19 +384,19 @@ namespace BetterPanning
 
         private void EnableSecondYearSeeds(bool enable)
         {
-            if (treasureGroups[TREASURE_GROUP.SpringSeeds].Enabled)
+            if (defaultTresureGroups[TREASURE_GROUP.SpringSeeds].Enabled)
             {
-                treasureGroups[TREASURE_GROUP.SpringSeeds].SetEnableTreasure(476, enable); //Garlic Seeds
+                defaultTresureGroups[TREASURE_GROUP.SpringSeeds].SetEnableTreasure(476, enable); //Garlic Seeds
             }
 
-            if (treasureGroups[TREASURE_GROUP.SummerSeeds].Enabled)
+            if (defaultTresureGroups[TREASURE_GROUP.SummerSeeds].Enabled)
             {
-                treasureGroups[TREASURE_GROUP.SummerSeeds].SetEnableTreasure(485, enable); //Red Cabbage Seeds
+                defaultTresureGroups[TREASURE_GROUP.SummerSeeds].SetEnableTreasure(485, enable); //Red Cabbage Seeds
             }
 
-            if (treasureGroups[TREASURE_GROUP.FallSeeds].Enabled)
+            if (defaultTresureGroups[TREASURE_GROUP.FallSeeds].Enabled)
             {
-                treasureGroups[TREASURE_GROUP.FallSeeds].SetEnableTreasure(489, enable); //Artichoke Seeds
+                defaultTresureGroups[TREASURE_GROUP.FallSeeds].SetEnableTreasure(489, enable); //Artichoke Seeds
             }
         }
 
@@ -401,10 +404,10 @@ namespace BetterPanning
         {
             double count = Convert.ToDouble(enableSpring) + Convert.ToDouble(enableSummer) + Convert.ToDouble(enableFall) + Convert.ToDouble(enableWinter);
 
-            treasureGroups[TREASURE_GROUP.SpringSeeds].SetEnableFlagOnAllTreasures(enableSpring);
-            treasureGroups[TREASURE_GROUP.SummerSeeds].SetEnableFlagOnAllTreasures(enableSummer);
-            treasureGroups[TREASURE_GROUP.FallSeeds].SetEnableFlagOnAllTreasures(enableFall);
-            treasureGroups[TREASURE_GROUP.WinterSeeds].SetEnableFlagOnAllTreasures(enableWinter);
+            defaultTresureGroups[TREASURE_GROUP.SpringSeeds].SetEnableFlagOnAllTreasures(enableSpring);
+            defaultTresureGroups[TREASURE_GROUP.SummerSeeds].SetEnableFlagOnAllTreasures(enableSummer);
+            defaultTresureGroups[TREASURE_GROUP.FallSeeds].SetEnableFlagOnAllTreasures(enableFall);
+            defaultTresureGroups[TREASURE_GROUP.WinterSeeds].SetEnableFlagOnAllTreasures(enableWinter);
 
             if( enableSpring)
             {
@@ -426,9 +429,9 @@ namespace BetterPanning
 
         private void SetSeedGroupChance(TREASURE_GROUP group, double count)
         {
-            if (!treasureGroups[group].ManualOverride && count > 0)
+            if (!defaultTresureGroups[group].ManualOverride && count > 0)
             {
-                treasureGroups[group].GroupChance = .05 / count;
+                defaultTresureGroups[group].GroupChance = .05 / count;
             }           
         }
 
@@ -504,7 +507,12 @@ namespace BetterPanning
                 if (mapOreConfig == null) //No file was found...
                 {
                     mapOreConfig = new MapOreConfig() 
-                        { AreaName = currentLocation.Name, numberOfOreSpotsPerDay = config.maxNumberOfOrePointsGathered };
+                        {  FileVersion = 1,
+                        AreaName = currentLocation.Name, 
+                        NumberOfOreSpotsPerDay = config.maxNumberOfOrePointsGathered, 
+                        StartTime = 0600, 
+                        EndTime = 2600, 
+                        CustomTreasure = false };
                     
                     var possibleTiles = new List<Point>();
 
@@ -534,6 +542,21 @@ namespace BetterPanning
                     {
                         this.Helper.Data.WriteJsonFile(file, mapOreConfig); // The only mine levels with water
                     }                    
+                }
+                if (mapOreConfig.FileVersion == 0)
+                {
+                    mapOreConfig.FileVersion = 1;
+                    mapOreConfig.StartTime = 600;
+                    mapOreConfig.EndTime = 2600;
+                    mapOreConfig.CustomTreasure = false;
+                    this.Helper.Data.WriteJsonFile(file, mapOreConfig);
+                }
+
+                if (mapOreConfig.CustomTreasure)
+                {
+                    string treasureFile = Path.Combine("DataFiles", $"{currentLocation.Name}_Treasure.json");
+                    var tresureGroups = this.Helper.Data.ReadJsonFile<Dictionary<TREASURE_GROUP, TreasureGroup>>(treasureFile) ?? TreasureGroupDefaultConfig.CreateTreasureGroup(treasureFile);
+                    areaTresureGroups.Add(currentLocation.Name, tresureGroups);
                 }
                 openWaterTiles.Add(currentLocation.Name, mapOreConfig);
             }

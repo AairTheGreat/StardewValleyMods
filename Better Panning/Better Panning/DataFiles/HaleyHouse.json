@@ -1,5 +1,9 @@
 {
+  "FileVersion": 1,
   "AreaName": "HaleyHouse",
   "numberOfOreSpotsPerDay": 0,
+  "StartTime": 600,
+  "EndTime": 2600,
+  "CustomTreasure": false,
   "OreSpots": []
 }
