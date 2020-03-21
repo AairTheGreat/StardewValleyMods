@@ -1,0 +1,15 @@
+{
+  // edit- hud labels
+  "hud.foundFishingSpot": "Найдено место для рыбалки!",
+  "hud.noFishingSpot": "Место для рыбалки не найдено!",
+  "hud.north": "С",
+  "hud.northwest": "СЗ",
+  "hud.northeast": "СВ",
+  "hud.south": "Ю",
+  "hud.southwest": "ЮЗ",
+  "hud.southeast": "ЮВ",
+  "hud.west": "З",
+  "hud.east": "В",
+  "hud.direction": "Необходимо двигаться на {{direction}}.",
+  "hud.distance": "В расстоянии {{distance}} плиток отсюда."
+}
