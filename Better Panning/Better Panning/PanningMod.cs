@@ -86,7 +86,6 @@ namespace BetterPanning
             translations.Add("hud.oreSpotDisappearedReason", Helper.Translation.Get("hud.oreSpotDisappearedReason"));
             translations.Add("hud.playerGotTheSpot", Helper.Translation.Get("hud.playerGotTheSpot"));
             translations.Add("hud.TryAgain", Helper.Translation.Get("hud.TryAgain"));
-
         }
 
         // Used for if the player goes to the start menu and selects a different saved game.
@@ -500,10 +499,17 @@ namespace BetterPanning
                 {
                     file = Path.Combine("DataFiles", farmFile);
                 }
-                
-                //List<Point> possibleTiles = this.Helper.Data.ReadJsonFile<List<Point>>(file);
-                var mapOreConfig = this.Helper.Data.ReadJsonFile<MapOreConfig>(file);
 
+                MapOreConfig mapOreConfig = null;
+                //List<Point> possibleTiles = this.Helper.Data.ReadJsonFile<List<Point>>(file);
+                try
+                {
+                    mapOreConfig = this.Helper.Data.ReadJsonFile<MapOreConfig>(file);
+                }
+                catch
+                {
+
+                }
                 if (mapOreConfig == null) //No file was found...
                 {
                     mapOreConfig = new MapOreConfig() 
