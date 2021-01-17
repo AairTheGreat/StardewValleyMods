@@ -1,7 +1,7 @@
 {
   "FileVersion": 1,
-  "AreaName": "Blacksmith",
-  "numberOfOreSpotsPerDay": 0,
+  "AreaName": "VolcanoDungeon9",
+  "NumberOfOreSpotsPerDay": 50,
   "StartTime": 600,
   "EndTime": 2600,
   "CustomTreasure": false,

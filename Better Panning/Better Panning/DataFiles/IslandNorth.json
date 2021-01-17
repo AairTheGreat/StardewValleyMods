@@ -1,9 +1,9 @@
 {
   "FileVersion": 1,
-  "AreaName": "JojaMart",
-  "numberOfOreSpotsPerDay": 0,
+  "AreaName": "IslandNorth",
+  "NumberOfOreSpotsPerDay": 50,
   "StartTime": 600,
   "EndTime": 2600,
   "CustomTreasure": false,
-  "OreSpots": []
+  "OreSpots": [ ]
 }

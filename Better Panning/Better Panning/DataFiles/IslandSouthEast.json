@@ -1,7 +1,7 @@
 {
   "FileVersion": 1,
-  "AreaName": "FarmCave",
-  "numberOfOreSpotsPerDay": 0,
+  "AreaName": "IslandSouthEast",
+  "NumberOfOreSpotsPerDay": 50,
   "StartTime": 600,
   "EndTime": 2600,
   "CustomTreasure": false,

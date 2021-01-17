@@ -1,9 +1,9 @@
 {
   "FileVersion": 1,
-  "AreaName": "Big Coop",
-  "numberOfOreSpotsPerDay": 0,
+  "AreaName": "IslandWest",
+  "NumberOfOreSpotsPerDay": 50,
   "StartTime": 600,
   "EndTime": 2600,
   "CustomTreasure": false,
-  "OreSpots": []
+  "OreSpots": [ ]
 }

@@ -1,7 +1,7 @@
 {
   "FileVersion": 1,
-  "AreaName": "Deluxe Barn",
-  "numberOfOreSpotsPerDay": 0,
+  "AreaName": "BoatTunnel",
+  "NumberOfOreSpotsPerDay": 50,
   "StartTime": 600,
   "EndTime": 2600,
   "CustomTreasure": false,

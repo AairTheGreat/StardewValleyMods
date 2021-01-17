@@ -35,7 +35,8 @@ namespace BetterPanning.GamePatch
                 .ToList();
             }
             // Select rewards
-            double chance = 1f;
+            double chance = 1f;           
+            int lootCount = 0;
 
             while (possibleGroups.Count > 0 && Game1.random.NextDouble() <= chance)
             {
@@ -95,6 +96,12 @@ namespace BetterPanning.GamePatch
 
                 // Update chance
                 chance *= PanningMod.Instance.config.additionalLootChance + Game1.player.DailyLuck; 
+                if (lootCount > 2 && chance >= 1.0)
+                {
+                    break;
+                }
+
+                lootCount++;
             }
 
             return rewards;

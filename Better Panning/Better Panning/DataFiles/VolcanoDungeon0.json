@@ -1,9 +1,9 @@
 {
   "FileVersion": 1,
-  "AreaName": "BathHouse_Pool",
-  "numberOfOreSpotsPerDay": 0,
+  "AreaName": "VolcanoDungeon0",
+  "NumberOfOreSpotsPerDay": 50,
   "StartTime": 600,
   "EndTime": 2600,
   "CustomTreasure": false,
-  "OreSpots": []
+  "OreSpots": [ ]
 }
