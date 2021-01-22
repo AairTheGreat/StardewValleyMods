@@ -33,7 +33,7 @@ namespace BetterPanning
         internal ModConfig config; 
 
         internal Dictionary<TREASURE_GROUP, TreasureGroup> defaultTresureGroups;
-        internal Dictionary<string, Dictionary<TREASURE_GROUP, TreasureGroup>> areaTresureGroups;  //GameLocation.Name : <treasure>
+        internal Dictionary<string, Dictionary<TREASURE_GROUP, TreasureGroup>> areaTreasureGroups;  //GameLocation.Name : <treasure>
 
         internal HarmonyInstance harmony { get; private set; }
 
@@ -62,7 +62,7 @@ namespace BetterPanning
             {
                 string treasureFile = Path.Combine("DataFiles", "Treasure.json");
                 defaultTresureGroups = this.Helper.Data.ReadJsonFile<Dictionary<TREASURE_GROUP, TreasureGroup>>(treasureFile) ?? TreasureGroupDefaultConfig.CreateTreasureGroup(treasureFile);
-                areaTresureGroups = new Dictionary<string, Dictionary<TREASURE_GROUP, TreasureGroup>>();
+                areaTreasureGroups = new Dictionary<string, Dictionary<TREASURE_GROUP, TreasureGroup>>();
 
                 harmony = HarmonyInstance.Create("com.aairthegreat.mod.panning");
                 harmony.Patch(typeof(Pan).GetMethod("getPanItems"), null, new HarmonyMethod(typeof(PanOverrider).GetMethod("postfix_getPanItems")));
@@ -93,7 +93,7 @@ namespace BetterPanning
         {
             openWaterTiles.Clear();
             modCreatedPanningSpot.Clear();
-            areaTresureGroups.Clear();
+            areaTreasureGroups.Clear();
 
             numberOfPanningSpotsGathered = 0;
             startup = true;
@@ -588,7 +588,7 @@ namespace BetterPanning
                 {
                     string treasureFile = Path.Combine("DataFiles", $"{currentLocation.Name}_Treasure.json");
                     var tresureGroups = this.Helper.Data.ReadJsonFile<Dictionary<TREASURE_GROUP, TreasureGroup>>(treasureFile) ?? TreasureGroupDefaultConfig.CreateTreasureGroup(treasureFile);
-                    areaTresureGroups.Add(currentLocation.Name, tresureGroups);
+                    areaTreasureGroups.Add(currentLocation.Name, tresureGroups);
                 }
                 openWaterTiles.Add(currentLocation.Name, mapOreConfig);
             }
