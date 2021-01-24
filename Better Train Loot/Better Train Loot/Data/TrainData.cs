@@ -46,5 +46,16 @@ namespace BetterTrainLoot.Data
                 }               
             }           
         }
+
+        internal bool HasItem(int id)
+        {
+            for (var i = 0; i<treasureList.Count; i++)
+            {
+                if (treasureList[i].Id == id)
+                    return true;
+            }
+
+            return false;
+        }
     }
 }
