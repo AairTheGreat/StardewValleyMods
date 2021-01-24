@@ -64,7 +64,8 @@ It possible that you decided to edit the config file and now it's not working as
 Currently this mod does support localization.  Currently this mod has:
 1. English
 2. Simpilified Chinese
-3. Russian
+3. Spanish
+4. Russian
 
 
 ## Thank You!
@@ -75,6 +76,7 @@ Currently this mod does support localization.  Currently this mod has:
 * Nexus user Nogohoho - For suggesting this mod idea.
 * Github user asqwedcxz741 - For the Simplified Chinese translation
 * Github user Dmitrey Kupcov - For the Russian translation
+* Nexus user kaog1992 - For the Spanish translation
 * To my testers: SparkyTheCat and My Better Half  -- Thank you!
 
 ## See Also
