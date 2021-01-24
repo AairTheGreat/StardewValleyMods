@@ -45,9 +45,7 @@ namespace BetterPanning
             helper.Events.Display.RenderedHud += Display_RenderedHud;
             helper.Events.Input.ButtonReleased += Input_ButtonReleased;
             helper.Events.GameLoop.SaveLoaded += GameLoop_SaveLoaded;
-
-            ConfigStaticTranslationStrings();
-
+            
             try
             {
                 config = this.Helper.Data.ReadJsonFile<ModConfig>("config.json") ?? ModConfigDefaultConfig.CreateDefaultConfig("config.json");
@@ -104,7 +102,8 @@ namespace BetterPanning
         }
 
         private void GameLoop_SaveLoaded(object sender, SaveLoadedEventArgs e)
-        {            
+        {
+            ConfigStaticTranslationStrings();
             if (config.useCustomPanningTreasure)
             {
                 VerifyInitValues();
