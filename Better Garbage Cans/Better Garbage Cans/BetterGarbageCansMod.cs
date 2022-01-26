@@ -1,7 +1,7 @@
 ﻿using BetterGarbageCans.Config;
 using BetterGarbageCans.Data;
 using BetterGarbageCans.GamePatch;
-using Harmony;
+using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
@@ -19,7 +19,7 @@ namespace BetterGarbageCans
         public static BetterGarbageCansMod Instance { get; private set; }
         internal static Multiplayer multiplayer;
 
-        internal HarmonyInstance harmony { get; private set; }
+        internal Harmony harmony { get; private set; }
 
         internal ModConfig config;
         internal Dictionary<GARBAGE_CANS, GarbageCan> garbageCans;
@@ -39,7 +39,7 @@ namespace BetterGarbageCans
             
             if (config.enableMod)
             {
-                harmony = HarmonyInstance.Create("com.aairthegreat.mod.garbagecan");
+                harmony = new Harmony("com.aairthegreat.mod.garbagecan");
                 harmony.Patch(typeof(Town).GetMethod("checkAction"), new HarmonyMethod(typeof(GarbageCanOverrider).GetMethod("prefix_betterGarbageCans")));
 
                 string garbageCanFile = Path.Combine("DataFiles", "garbage_cans.json");
