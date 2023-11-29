@@ -1,0 +1,19 @@
+{
+  // edit- hud labels
+  "hud.foundOreSpot": "Goudwas plek gevonden!",
+  "hud.noOreSpot": "Geen goudwas plek kunnen vinden!",
+  "hud.north": "N",
+  "hud.northwest": "NW",
+  "hud.northeast": "NO",
+  "hud.south": "Z",
+  "hud.southwest": "ZW",
+  "hud.southeast": "ZO",
+  "hud.west": "W",
+  "hud.east": "O",
+  "hud.direction": "In de richting van {{destination}}",
+  "hud.distance": "Ongeveer {{distance}} van je verwijderd"
+  "hud.oreSpotDisappeared": "De goudwas plek is verdwenen!",
+  "hud.oreSpotDisappearedReason": "Een vis zal de schat hebben opgegeten!",
+  "hud.playerGotTheSpot": "Goed gedaan! Je hebt de plek!",
+  "hud.TryAgain": "Probeer dit gebied later!"
+}
