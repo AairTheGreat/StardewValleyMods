@@ -1,0 +1,15 @@
+{
+  // edit- hud labels
+  "hud.foundFishingSpot": "Visplek gevonden!",
+  "hud.noFishingSpot": "Helaas kon er geen visplek worden gevonden",
+  "hud.north": "N",
+  "hud.northwest": "NW",
+  "hud.northeast": "NO",
+  "hud.south": "Z",
+  "hud.southwest": "ZW",
+  "hud.southeast": "ZO",
+  "hud.west": "W",
+  "hud.east": "O",
+  "hud.direction": "In de richting van {{destination}}",
+  "hud.distance": "Ongeveer {{distance}} van je verwijderd"
+}
